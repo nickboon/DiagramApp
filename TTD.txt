@@ -1,0 +1,23 @@
+future features:
+
+transformations:
+
+	create a lookout table for the cos and sin of a defined set of angles to optimise stage rotations.
+
+	function createSinCosLookupTable(numberOfDegrees) {
+		var sinCosLookup = [],
+			angleIncrement = 2 * Math.PI / numberOfDegrees,
+			i;
+		for (i = numberOfDegrees - 1; i >= 0; i -= 1) {
+			var angle = i * angleIncrement;
+			sinCosLookup[i] = ({
+				sin: Math.sin(angle),
+				cos: Math.cos(angle)
+			});				
+		}
+		return sinCosLookup;		
+	}
+		
+perspective:
+
+	add option to simulate aerial perspective.
