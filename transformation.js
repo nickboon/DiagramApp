@@ -2,7 +2,7 @@
 	var numberOfDegrees = 360,
 		angle = Math.PI * 2 / numberOfDegrees;
 
-			function rotatePointAboutX(point, angle) {
+	function rotatePointAboutX(point, angle) {
 		var cosX = Math.cos(angle),
 			sinX = Math.sin(angle),
 			newY = point.y * cosX - point.z * sinX,
@@ -114,6 +114,21 @@
 			transform: shiftRotate
 		}
 	}
+	
+	function autoRotate(point) {
+		rotatePointAboutY(point, angle);
+	} 
+
+	function transform(points) {
+		points.forEach(autoRotate);
+	}
+	
+	function createAutoYRotationTransformer() {		
+		return {
+			transform: transform
+		};
+	};
+		
 	// create and return API for this module
 	app.createTransformationObject = function () {
 		return {
@@ -121,6 +136,7 @@
 			rotatePointAboutY: rotatePointAboutY,
 			rotatePointAboutZ: rotatePointAboutZ,
 			createKeyboardIDrivenTransformer: createKeyboardIDrivenTransformer,
+			createAutoYRotationTransformer: createAutoYRotationTransformer,
 			angle: angle
 		};
 	};

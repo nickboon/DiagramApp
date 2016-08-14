@@ -1,4 +1,4 @@
-/* required diagrams, points, primitives, shapes, solids, fakeSpheres */
+/* required diagrams, points, primitives, shapes, solids, fakeSpheres transformaton*/
 (function (app) {		
 	function createLabelsForCubeVertices(points, primitives, shapes) {
 		var labelSolids = [],
@@ -61,9 +61,14 @@
 	app.run = function () {
 		var diagram = app.createDefaultFullScreenDiagram(),
 			perspective = diagram.perspective, 
-			solidsList = createSolidsList(perspective);
+			solidsList = createSolidsList(perspective),
+			transformation = app.createTransformationObject(),
+			transformer = transformation.createAutoYRotationTransformer();
+
 			
 		diagram.addSolids(solidsList);
+		diagram.stage.setTransformer(transformer);
+
 	}
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
 
