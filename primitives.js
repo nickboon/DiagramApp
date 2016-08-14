@@ -1,6 +1,7 @@
 /* requires drawing */
 (function (app) {
-	var drawing;
+	var drawing,
+		getNearestZFromArray = app.createPointsObject().getNearestZFromArray;
 	
 	function toSolid(primitive) {
 		return {
@@ -8,15 +9,7 @@
 			primitives: [primitive]
 		};		
 	}
-	
-	function getNearestZFromArray(points) {
-		var numbers = points.map(function(point) {
-			return point.z;
-		});
-
-		return Math.min.apply(null, numbers);
-	}	
-		
+			
 	function createLine(pointA, pointB, colour, alpha) {
 		if(!pointA || !pointB) {
 			throw "You need at least 2 defined vertices for a line.";
@@ -77,7 +70,6 @@
 		
 		return {
 			toSolid: toSolid,
-			getNearestZFromArray: getNearestZFromArray,
 			createLine: createLine,
 			createCurve: createCurve,
 			createFill: createFill

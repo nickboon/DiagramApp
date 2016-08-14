@@ -1,5 +1,8 @@
 (function (app) {
-	function rotatePointAboutX(point, angle) {
+	var numberOfDegrees = 360,
+		angle = Math.PI * 2 / numberOfDegrees;
+
+			function rotatePointAboutX(point, angle) {
 		var cosX = Math.cos(angle),
 			sinX = Math.sin(angle),
 			newY = point.y * cosX - point.z * sinX,
@@ -27,9 +30,7 @@
 	};
 	
 	function createKeyboardIDrivenTransformer() {
-		var numberOfDegrees = 360,
-			angle = Math.PI * 2 / numberOfDegrees,
-			angleX = 0,
+		var	angleX = 0,
 			angleY = 0,
 			shift = .5,
 			shiftX = 0,
@@ -116,7 +117,11 @@
 	// create and return API for this module
 	app.createTransformationObject = function () {
 		return {
-			createKeyboardIDrivenTransformer: createKeyboardIDrivenTransformer
+			rotatePointAboutX: rotatePointAboutX,
+			rotatePointAboutY: rotatePointAboutY,
+			rotatePointAboutZ: rotatePointAboutZ,
+			createKeyboardIDrivenTransformer: createKeyboardIDrivenTransformer,
+			angle: angle
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

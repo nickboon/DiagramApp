@@ -24,7 +24,8 @@
 
 		return {
 			addSolids: stage.addSolids,
-			perspective: perspective
+			perspective: perspective,
+			stage: stage
 		}	
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
