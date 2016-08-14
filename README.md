@@ -1,6 +1,6 @@
 # DiagramApp
 
-This code was based on that a spinning cube tutorial by Keith Peters and Billy Lamberta. I'm using a modified version of their toRGBColur method. I reccomend the book:
+This code was based on that a spinning cube tutorial by Keith Peters and Billy Lamberta. I'm using a modified version of their colorToRGB method. I reccomend the book:
 
 https://github.com/lamberta/html5-animation
 
