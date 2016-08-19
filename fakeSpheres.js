@@ -1,7 +1,7 @@
 /* requires perspective, shapes */
 (function (app) {
 	var perspective,
-		shapes = app.createShapesObject();
+		shapes;
 				
 	function createFakeSphereFill(point, radius, apparentRadius, colour, alpha) {
 		return {			
@@ -44,8 +44,11 @@
 		
 	// create and return API for this module		
 	app.createFakeSpheresObject = function (p) {
-		perspective = p;
+		var drawing = app.createDrawingObject(p);
 		
+		shapes = app.createShapesObject(drawing);				
+		perspective = p;
+
 		return {
 			create: create
 		};
