@@ -9,6 +9,7 @@
 			newZ = point.z * cosX + point.y * sinX;
 		point.y = newY;
 		point.z = newZ;
+		return point;
 	};
 	
 	function rotatePointAboutY(point, angle) {
@@ -18,6 +19,7 @@
 			newZ = point.z * cosY + point.x * sinY;
 		point.x = newX;
 		point.z = newZ;
+		return point;
 	};
 
 	function rotatePointAboutZ(point, angle) {
@@ -27,7 +29,22 @@
 			newY = point.y * cosZ + point.x * sinZ;
 		point.x = newX;
 		point.y = newY;
+		return point;
 	};
+	
+	function copyPointAndShift(point, axis, distance) {
+		return axis === 'x' ? {x: point.x + distance, y: point.y, z: point.z} :
+			axis === 'y' ? {x: point.x, y: point.y + distance, z: point.z} :
+				{x: point.x, y: point.y, z: point.z + distance};
+	}
+	
+	function copyPointAndRotate(point, axis, angle) {
+		var newPoint = {x: point.x, y: point.y, z: point.z};
+		
+		return axis === 'x' ? rotatePointAboutX(newPoint, angle) :
+			axis === 'y' ? rotatePointAboutY(newPoint, angle) :
+				rotatePointAboutZ(newPoint, angle)
+	}
 	
 	function createKeyboardIDrivenTransformer() {
 		var	angleX = 0,
@@ -135,6 +152,8 @@
 			rotatePointAboutX: rotatePointAboutX,
 			rotatePointAboutY: rotatePointAboutY,
 			rotatePointAboutZ: rotatePointAboutZ,
+			copyPointAndShift: copyPointAndShift,
+			copyPointAndRotate: copyPointAndRotate,
 			createKeyboardIDrivenTransformer: createKeyboardIDrivenTransformer,
 			createAutoYRotationTransformer: createAutoYRotationTransformer,
 			angle: angle
