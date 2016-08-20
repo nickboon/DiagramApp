@@ -49,6 +49,7 @@
 		alpha = alpha || defaultAlpha;			
 		context.save();
 		context.beginPath();
+		context.strokeStyle = colours.toRgb(colour, alpha);
 		context.moveTo(perspective.getScreenX(pointA), perspective.getScreenY(pointA));
 		context.bezierCurveTo(
 			getScreenX(pointB), getScreenY(pointB),
@@ -62,7 +63,6 @@
 	function drawCircle(context, point, radius, colour, alpha) {
 		colour = colour || defaultLineColour;		
 		alpha = alpha || defaultAlpha;			
-		colour = colour || defaultLineColour;
 		context.save();
 		context.strokeStyle = colours.toRgb(colour, alpha);
 		context.beginPath();
