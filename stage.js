@@ -6,7 +6,8 @@
 		transformationPoints = [],	
 		transformer,
 		canvas,
-		drawingContext;
+		drawingContext,
+		animationFunctions = [];
 	
 	function addSolid(solid) {
 		primitives = primitives.concat(solid.primitives);
@@ -23,6 +24,10 @@
 		transformer = t;
 	}		
 			
+	function setAnimationFunctions(animationFunctionArray) {
+		animationFunctions = animationFunctionArray;
+	}		
+						
 	function drawPrimitive(primitive) {
 		if (perspective.isPointBehindViewer(primitive.getNearestZ())) { 		
 			primitive.draw(drawingContext);
@@ -30,8 +35,7 @@
 	}
 	
 	function draw() {
-        drawingContext.clearRect(0, 0, canvas.width, canvas.height);
-		primitives.sort(function (a, b) {
+ 		primitives.sort(function (a, b) {
             return a.getNearestZ() - b.getNearestZ();
         });
         primitives.reverse();
@@ -44,9 +48,17 @@
 		}		
 	}
 	
+	function runAnimationFunctions() {
+		for(var i = animationFunctions.length - 1; i >= 0; i -= 1) {
+			animationFunctions[i]();
+		}
+	}
+	
 	function animate() {
 		window.requestAnimationFrame(animate, canvas);
 			transform();
+			drawingContext.clearRect(0, 0, canvas.width, canvas.height);
+			runAnimationFunctions();
 			draw();
 	}
 	
@@ -60,7 +72,8 @@
 			addSolid: addSolid,
 			addSolids: addSolids,
 			setTransformer: setTransformer,
-			animate: animate
+			animate: animate,
+			setAnimationFunctions: setAnimationFunctions
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
