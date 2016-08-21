@@ -3,15 +3,15 @@
 	var perspective,
 		solids = [],
 		primitives = [],
-		transformationPoints = [],	
-		transformer,
+		//transformationPoints = [],	
+		transformers = [],
 		canvas,
 		drawingContext,
 		animationFunctions = [];
 	
 	function addSolid(solid) {
 		primitives = primitives.concat(solid.primitives);
-		transformationPoints = transformationPoints.concat(solid.points);
+		//transformationPoints = transformationPoints.concat(solid.points);
 	}
 		
 	function addSolids(solidArray) {
@@ -20,14 +20,10 @@
 		}
 	}	
 			
-	function setTransformer(t) {
-		transformer = t;
+	function setTransformers(transformersArray) {
+		transformers = transformersArray;
 	}		
-			
-	function setAnimationFunctions(animationFunctionArray) {
-		animationFunctions = animationFunctionArray;
-	}		
-						
+									
 	function drawPrimitive(primitive) {
 		if (perspective.isPointBehindViewer(primitive.getNearestZ())) { 		
 			primitive.draw(drawingContext);
@@ -35,6 +31,7 @@
 	}
 	
 	function draw() {
+		drawingContext.clearRect(0, 0, canvas.width, canvas.height);
  		primitives.sort(function (a, b) {
             return a.getNearestZ() - b.getNearestZ();
         });
@@ -42,23 +39,17 @@
         primitives.forEach(drawPrimitive);
     };
 	
-	function transform() {
-		if(transformer) {
-			transformer.transform(transformationPoints);
-		}		
+	function runTransformation(transformer) {
+		transformer.transform();		
 	}
 	
-	function runAnimationFunctions() {
-		for(var i = animationFunctions.length - 1; i >= 0; i -= 1) {
-			animationFunctions[i]();
-		}
+	function transform() {		
+		transformers.forEach(runTransformation)
 	}
 	
 	function animate() {
 		window.requestAnimationFrame(animate, canvas);
 			transform();
-			drawingContext.clearRect(0, 0, canvas.width, canvas.height);
-			runAnimationFunctions();
 			draw();
 	}
 	
@@ -71,9 +62,8 @@
 		return {
 			addSolid: addSolid,
 			addSolids: addSolids,
-			setTransformer: setTransformer,
+			setTransformers: setTransformers,
 			animate: animate,
-			setAnimationFunctions: setAnimationFunctions
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

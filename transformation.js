@@ -46,8 +46,9 @@
 				rotatePointAboutZ(newPoint, angle)
 	}
 	
-	function createKeyboardIDrivenTransformer() {
-		var	angleX = 0,
+	function createKeyboardIDrivenTransformer(solids) {
+		var	points = [],
+			angleX = 0,
 			angleY = 0,
 			shift = .5,
 			shiftX = 0,
@@ -123,24 +124,47 @@
 			point.z += shiftZ;
 		}
 		
-		function shiftRotate(points) {
+		function shiftRotate() {
 			points.forEach(shiftRotatePoint);		
 		}
+		
+		function addPointsToTransformer(solid) {
+			points = points.concat(solid.points);
+		}
+			
+		if (solids === 'undefined') {
+			throw "You must an array of solids to be transformed when creating a transformer";
+		}
+			
+		solids.forEach(addPointsToTransformer)
 		
 		return {
 			transform: shiftRotate
 		}
 	}
 	
-	function autoRotate(point) {
-		rotatePointAboutY(point, angle);
-	} 
-
-	function transform(points) {
-		points.forEach(autoRotate);
-	}
 	
-	function createAutoYRotationTransformer() {		
+	function createAutoYRotationTransformer(solids) {		
+		var points = [];
+	
+		function autoRotate(point) {
+			rotatePointAboutY(point, angle);
+		} 
+
+		function transform() {
+			points.forEach(autoRotate);
+		}
+
+		function addPointsToTransformer(solid) {
+			points = points.concat(solid.points);
+		}
+			
+		if (solids === 'undefined') {
+			throw "You must an array of solids to be transformed when creating a transformer";
+		}
+			
+		solids.forEach(addPointsToTransformer);
+		
 		return {
 			transform: transform
 		};

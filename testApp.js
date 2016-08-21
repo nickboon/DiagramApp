@@ -59,16 +59,17 @@
 	}
 	
 	app.run = function () {
-		var diagram = app.createDefaultFullScreenDiagram(),
+		var 
+			diagram = app.createDefaultFullScreenDiagram(),
 			perspective = diagram.perspective, 
 			solidsList = createSolidsList(perspective),
 			transformation = app.createTransformationObject(),
-			transformer = transformation.createAutoYRotationTransformer();
+			autoTransformer = transformation.createAutoYRotationTransformer(solidsList),
+			inputTranformer = transformation.createKeyboardIDrivenTransformer(solidsList);
 
 			
-		diagram.addSolids(solidsList);
-		diagram.stage.setTransformer(transformer);
-
+		 diagram.stage.addSolids(solidsList);
+		 diagram.stage.setTransformers([autoTransformer, inputTranformer]);
 	}
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
 

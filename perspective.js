@@ -23,7 +23,15 @@
 	function isPointBehindViewer(pointZ) {
 		return pointZ > -focalLength;		
 	}
+		
+	function shiftVanishingPointX(shiftX) {	
+		vanishingPointX += shiftX;	
+	}
 	
+	function shiftVanishingPointY(shiftY) {	
+		vanishingPointY += shiftY;	
+	}	
+		
 	// create and return API for this module
 	app.createPerspectiveObject = function (vpx, vpy, f) {
 		if(!vpx && !vpy) {
@@ -37,7 +45,9 @@
 			getScale: getScale,
 			getScreenX: getScreenX,
 			getScreenY: getScreenY,
-			isPointBehindViewer: isPointBehindViewer
+			isPointBehindViewer: isPointBehindViewer,
+			shiftVanishingPointX: shiftVanishingPointX,
+			shiftVanishingPointY: shiftVanishingPointY
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
