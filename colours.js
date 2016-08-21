@@ -1,12 +1,12 @@
 (function (app) {
 	function toRgb (colour, alpha) {
-		var r,
+		var defaultAlpha = 0.5,
+			r,
 			g,
 			b,
-			a
+			a = a || defaultAlpha;
 		
 		colour = window.parseInt(colour.slice(1), 16);
-		alpha = alpha || defaultAlpha;
 		//parse hex values
 		r = colour >> 16 & 0xff;
 		g = colour >> 8 & 0xff;
