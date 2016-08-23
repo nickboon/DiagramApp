@@ -3,7 +3,7 @@
 	// config
 	var	defaultLineColour = '#000000',
 		defaultFillColour = '#FFFFFF',
-		defaultAlpha = .5,
+		defaultAlpha = 1,//.5,
 		defaultFont = {
 			size: 20,
 			type: 'sans-serif'
