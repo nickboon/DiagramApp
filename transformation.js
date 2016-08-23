@@ -1,6 +1,7 @@
 (function (app) {
 	var numberOfDegrees = 360,
-		angle = Math.PI * 2 / numberOfDegrees;
+		defaultAngle = Math.PI * 2 / numberOfDegrees,
+		defaultShift = .5;
 
 	function rotatePointAboutX(point, angle) {
 		var cosX = Math.cos(angle),
@@ -46,13 +47,15 @@
 				rotatePointAboutZ(newPoint, angle)
 	}
 	
-	function createKeyboardIDrivenTransformer(solids) {
-		var	points = [],
+	function createKeyboardDrivenTransformer(solids, s) {
+		var	speed = s || 1;
+			points = [],
+			angle = defaultAngle * speed;
 			angleX = 0,
 			angleY = 0,
-			shift = .5,
+			shift = defaultShift * speed,
 			shiftX = 0,
-			shiftZ = 0;
+			shiftZ = 0,
 			
 		(function addKeyboardListener() {
 			window.addEventListener('keydown', function (event) {
@@ -136,6 +139,10 @@
 			throw "You must an array of solids to be transformed when creating a transformer";
 		}
 			
+		if(speed) {
+			angle *= speed;
+		}	
+			
 		solids.forEach(addPointsToTransformer)
 		
 		return {
@@ -145,7 +152,8 @@
 	
 	
 	function createAutoYRotationTransformer(solids) {		
-		var points = [];
+		var points = [],
+		angle = defaultAngle;
 	
 		function autoRotate(point) {
 			rotatePointAboutY(point, angle);
@@ -178,9 +186,9 @@
 			rotatePointAboutZ: rotatePointAboutZ,
 			copyPointAndShift: copyPointAndShift,
 			copyPointAndRotate: copyPointAndRotate,
-			createKeyboardIDrivenTransformer: createKeyboardIDrivenTransformer,
+			createKeyboardDrivenTransformer: createKeyboardDrivenTransformer,
 			createAutoYRotationTransformer: createAutoYRotationTransformer,
-			angle: angle
+			angle: defaultAngle
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

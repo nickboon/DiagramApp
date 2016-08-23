@@ -19,8 +19,13 @@
 			addSolid(solidArray[i]);
 		}
 	}	
-			
+	
+	function getSolids() {
+		return solids;
+	}
+	
 	function setTransformers(transformersArray) {
+		transformers.length = 0;
 		transformers = transformersArray;
 	}		
 									
@@ -62,6 +67,7 @@
 		return {
 			addSolid: addSolid,
 			addSolids: addSolids,
+			getSolids: getSolids,
 			setTransformers: setTransformers,
 			animate: animate,
 		};

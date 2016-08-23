@@ -65,7 +65,7 @@
 			solidsList = createSolidsList(perspective),
 			transformation = app.createTransformationObject(),
 			autoTransformer = transformation.createAutoYRotationTransformer(solidsList),
-			inputTranformer = transformation.createKeyboardIDrivenTransformer(solidsList);
+			inputTranformer = transformation.createKeyboardDrivenTransformer(solidsList);
 
 			
 		 diagram.stage.addSolids(solidsList);

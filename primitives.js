@@ -10,7 +10,12 @@
 		};		
 	}
 			
-	function createLine(pointA, pointB, colour, alpha) {
+	function createLine(p, b, c, a) {
+		var pointA = p,
+			pointB = b,
+			colour = c,
+			alpha = a;
+		
 		if(!pointA || !pointB) {
 			throw "You need at least 2 defined vertices for a line.";
 		}
@@ -24,7 +29,15 @@
 			
 			draw: function draw(drawingContext) {
 				drawing.drawLine(drawingContext, pointA, pointB, colour, alpha);
-			} 			
+			}, 	
+
+			setColour: function (newColour) {
+				colour = newColour;
+			},
+			
+			setAlpha: function (newAlpha) {
+				alpha = newAlpha;
+			}
 		};	
 	}
 	
