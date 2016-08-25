@@ -41,6 +41,26 @@
 			primitives: createPrimitives()
 		};
 	}
+	
+	function createStroke(point, radius, lineColour, alpha) {
+		var nearPoint,
+			apparentRadius;
+			
+		point = point || app.createPointsObject().create;				
+		nearPoint = {x: point.x, y: point.y, z: point.z - radius};
+		apparentRadius = radius * perspective.getScale(nearPoint); 
+		
+		function createPrimitives() {
+			return [
+				createFakeSphereEdge(point, apparentRadius, lineColour, alpha)
+			]			
+		}
+			
+		return {
+			points: [point],			
+			primitives: createPrimitives()
+		};
+	}
 		
 	// create and return API for this module		
 	app.createFakeSpheresObject = function (p) {
@@ -50,7 +70,8 @@
 		perspective = p;
 
 		return {
-			create: create
+			create: create,
+			createStroke: createStroke
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
