@@ -68,7 +68,7 @@
 			inputTranformer = transformation.createKeyboardDrivenTransformer(solidsList);
 
 			
-		 diagram.stage.addSolids(solidsList);
+		 diagram.stage.setSolids(solidsList);
 		 diagram.stage.setTransformers([autoTransformer, inputTranformer]);
 	}
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

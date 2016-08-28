@@ -1,9 +1,7 @@
 /* requires perspective */
 (function (app) {	
 	var perspective,
-		solids = [],
 		primitives = [],
-		//transformationPoints = [],	
 		transformers = [],
 		canvas,
 		drawingContext,
@@ -11,7 +9,6 @@
 	
 	function addSolid(solid) {
 		primitives = primitives.concat(solid.primitives);
-		//transformationPoints = transformationPoints.concat(solid.points);
 	}
 		
 	function addSolids(solidArray) {
@@ -20,10 +17,13 @@
 		}
 	}	
 	
-	function getSolids() {
-		return solids;
+	function setSolids(solidArray) {
+		primitives.length = 0;
+		for(var i = solidArray.length - 1; i >= 0; i -= 1) {
+			addSolid(solidArray[i]);
+		}		
 	}
-	
+
 	function setTransformers(transformersArray) {
 		transformers.length = 0;
 		transformers = transformersArray;
@@ -65,9 +65,7 @@
 		drawingContext = canvas.getContext('2d');
 
 		return {
-			addSolid: addSolid,
-			addSolids: addSolids,
-			getSolids: getSolids,
+			setSolids: setSolids,
 			setTransformers: setTransformers,
 			animate: animate,
 		};
