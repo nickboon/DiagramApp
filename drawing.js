@@ -50,7 +50,7 @@
 		context.save();
 		context.beginPath();
 		context.strokeStyle = colours.toRgb(colour, alpha);
-		context.moveTo(perspective.getScreenX(pointA), perspective.getScreenY(pointA));
+		context.moveTo(getScreenX(pointA), getScreenY(pointA));
 		context.bezierCurveTo(
 			getScreenX(pointB), getScreenY(pointB),
 			getScreenX(pointC), getScreenY(pointC),
@@ -78,7 +78,7 @@
 	}
 	
 	function drawFill(context, points, colour, alpha) {
-		var lastPoint = points.length -1,
+		var lastIndex = points.length -1,
 			i;
 			
 		colour = colour || defaultFillColour;
@@ -86,9 +86,9 @@
 		context.save();
 		context.fillStyle = colours.toRgb(colour, alpha);
 		context.beginPath();
-		context.moveTo(getScreenX(points[lastPoint]), getScreenY(points[lastPoint]));
+		context.moveTo(getScreenX(points[lastIndex]), getScreenY(points[lastIndex]));
 		
-		for(i = lastPoint - 1 ; i >= 0; i -= 1) {
+		for(i = lastIndex ; i >= 0; i -= 1) {
 			context.lineTo(getScreenX(points[i]), getScreenY(points[i]));		
 		}
 		context.closePath();
