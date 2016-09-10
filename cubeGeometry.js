@@ -1,4 +1,11 @@
-(function (app) {
+(function (app) {		
+	var angleBetweenFaceDiagonalAndCubeDiagonal = Math.atan(1 / Math.sqrt(2)),
+			angleBetweenEdgeAndCubeDiagonal = Math.atan(Math.sqrt(2)),
+			angleAtCenterBetweenVerticesSeparatedByAnEdge =
+			  angleBetweenFaceDiagonalAndCubeDiagonal * 2,
+			angleAtCenterBetweenVerticesSeparatedByAFaceDiagonal =
+				angleBetweenEdgeAndCubeDiagonal * 2;
+
 	function getFaceDiagonal(width) {
 		return Math.sqrt(2) * width;
 	}
@@ -7,31 +14,15 @@
 		return Math.sqrt(3) * width;
 	}
 
-	function getAngleBetweenFaceDiagonalAndCubeDiagonal(width) {
-		return Math.atan(width / getFaceDiagonal(width));
-	}
-
-	function getAngleAtCenterBetweenVerticesSeparatedByAnEdge(width) {
-		return getAngleBetweenFaceDiagonalAndCubeDiagonal(width) * 2;
-	}
-
-	function getAngleBetweenWidthAndCubeDiagonal(width) {
-		return Math.atan(getFaceDiagonal(width) / width)
-	}
-
-	function getAngleAtCenterBetweenVerticesSeparatedByAFaceDiagonal(width) {
-		return getAngleBetweenWidthAndCubeDiagonal(width) * 2;
-	}
-	
 	// create and return API for this module
 	app.createCubeGeometryObject = function () {
 		return {
 			getFaceDiagonal: getFaceDiagonal,
 			getCubeDiagonal: getCubeDiagonal,
-			getAngleBetweenFaceDiagonalAndCubeDiagonal: getAngleBetweenFaceDiagonalAndCubeDiagonal,
-			getAngleAtCenterBetweenVerticesSeparatedByAnEdge: getAngleAtCenterBetweenVerticesSeparatedByAnEdge,
-			getAngleBetweenWidthAndCubeDiagonal: getAngleBetweenWidthAndCubeDiagonal,
-			getAngleAtCenterBetweenVerticesSeparatedByAFaceDiagonal: getAngleAtCenterBetweenVerticesSeparatedByAFaceDiagonal
+			angleBetweenFaceDiagonalAndCubeDiagonal: angleBetweenFaceDiagonalAndCubeDiagonal,
+			angleBetweenEdgeAndCubeDiagonal: angleBetweenEdgeAndCubeDiagonal,
+			angleAtCenterBetweenVerticesSeparatedByAnEdge: angleAtCenterBetweenVerticesSeparatedByAnEdge,
+			angleAtCenterBetweenVerticesSeparatedByAFaceDiagonal: angleAtCenterBetweenVerticesSeparatedByAFaceDiagonal
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

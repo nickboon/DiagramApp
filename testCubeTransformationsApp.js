@@ -31,10 +31,21 @@
 			cubePoints = cubeTransformations.getPoints(),
 			cube = solids.createHexahedron(cubePoints);
 
-			cubeTransformations.rotateCube45DegreesAboutY();
+			cubeTransformations.rotateCubeAboutY(Math.PI / 4);
 			cubeTransformations.tiltCubeAboutX();
 			cubeTransformations.rotateCubeAlongEdgeAboutX();
 			cubeTransformations.rotateCubeAlongFaceDiagonalAboutX();
+			cubeTransformations.rotateCubeAlongEdgeAboutX();
+			
+			cubeTransformations.rotateCubeAlongFaceDiagonalAboutX();
+			cubeTransformations.tiltBackCubeAboutX();
+			cubeTransformations.rotateCubeAboutY(Math.PI / 2);
+			cubeTransformations.tiltCubeAboutX();
+			
+			cubeTransformations.rotateCubeAlongEdgeAboutX();
+			cubeTransformations.rotateCubeAlongFaceDiagonalAboutX();
+			cubeTransformations.rotateCubeAlongEdgeAboutX();
+			//cubeTransformations.rotateCubeAlongFaceDiagonalAboutX();
 		
 		return [cube].concat(
 			createLabelsForCubeVertices(cube.points, primitives, shapes)		

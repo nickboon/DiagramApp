@@ -6,66 +6,73 @@
 		transformations = app.createTransformationObject(),
 		rotateAboutX = transformations.rotatePointAboutX,
 		rotateAboutY = transformations.rotatePointAboutY,
-	// module variables
-		points = [],
-		tiltAngle = 0,
-		rotateAlongEdgeAngle = 0,
-		rotateAlongFaceDiagonalAngle = 0;
+		cubeGeometry = app.createCubeGeometryObject(),				
+		tiltAngle = cubeGeometry.angleBetweenFaceDiagonalAndCubeDiagonal,
+		rotateAlongEdgeAngle =
+			-cubeGeometry.angleAtCenterBetweenVerticesSeparatedByAnEdge,
+		rotateAlongFaceDiagonalAngle =
+			-cubeGeometry.angleAtCenterBetweenVerticesSeparatedByAFaceDiagonal;
 
-	function rotate45DegreesAboutY(point) {
-		rotateAboutY(point, Math.PI / 4);
-	}
-
-	function rotateCube45DegreesAboutY() {
-		points.forEach(rotate45DegreesAboutY)
-	}
-		
 	function rotateTiltAngleAboutX(point) {
 		rotateAboutX(point, tiltAngle);
 	}	
 		
-	function tiltCubeAboutX() {
-		points.forEach(rotateTiltAngleAboutX);
-	}
+	function rotateMinusTiltAngleAboutX(point) {
+		rotateAboutX(point, -tiltAngle);
+	}	
 
 	function rotateAlongEdgeAboutX(point) {
 		rotateAboutX(point, rotateAlongEdgeAngle);
 	}	
 
-	function rotateCubeAlongEdgeAboutX() {
-		points.forEach(rotateAlongEdgeAboutX);		
-	}
-
 	function rotateAlongFaceDiagonalAboutX(point) {
 		rotateAboutX(point, rotateAlongFaceDiagonalAngle);
 	}	
 	
-	function rotateCubeAlongFaceDiagonalAboutX() {
-		points.forEach(rotateAlongFaceDiagonalAboutX);				
-	}
-
-	function getPoints() {
-		return points;
-	}
-
 	// create and return API for this module
 	app.createCubeTransformationsObject = function (w) {
 		var width = w || defaultWidth,
-			cubeGeometry = app.createCubeGeometryObject();
-				
-		points = app.getCubePoints(width);
-		tiltAngle = cubeGeometry.getAngleBetweenFaceDiagonalAndCubeDiagonal(width);
-		rotateAlongEdgeAngle =
-			-cubeGeometry.getAngleAtCenterBetweenVerticesSeparatedByAnEdge(width);
-		rotateAlongFaceDiagonalAngle =
-			-cubeGeometry
-				.getAngleAtCenterBetweenVerticesSeparatedByAFaceDiagonal(width);
+			points = app.getCubePoints(width);
 		
+		function rotateCubeAboutY(a) {
+			var angle = a || 0;
+			
+			points.forEach(function (point) {
+				rotateAboutY(point, angle);
+			});
+		}
+		
+		function tiltCubeAboutX() {
+			points.forEach(rotateTiltAngleAboutX);
+		}
+
+		function tiltBackCubeAboutX() {
+			points.forEach(rotateMinusTiltAngleAboutX);
+		}
+
+		function rotateCubeAlongEdgeAboutX() {
+			points.forEach(rotateAlongEdgeAboutX);		
+		}
+
+		function rotateCubeAlongFaceDiagonalAboutX() {
+			points.forEach(rotateAlongFaceDiagonalAboutX);				
+		}
+
+		function getPoints() {
+			return points;
+		}
+
 		return {
 			getPoints: getPoints,
-			rotateCube45DegreesAboutY: rotateCube45DegreesAboutY,
+			rotateAboutY: rotateAboutY,
+			rotateCubeAboutY: rotateCubeAboutY,
+			rotateTiltAngleAboutX: rotateTiltAngleAboutX,
+			rotateMinusTiltAngleAboutX: rotateMinusTiltAngleAboutX,
 			tiltCubeAboutX: tiltCubeAboutX,
+			tiltBackCubeAboutX: tiltBackCubeAboutX,
+			rotateAlongEdgeAboutX: rotateAlongEdgeAboutX,
 			rotateCubeAlongEdgeAboutX: rotateCubeAlongEdgeAboutX,
+			rotateAlongFaceDiagonalAboutX: rotateAlongFaceDiagonalAboutX,
 			rotateCubeAlongFaceDiagonalAboutX: rotateCubeAlongFaceDiagonalAboutX
 		};
 	};

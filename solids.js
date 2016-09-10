@@ -9,16 +9,6 @@
 		
 		function createDefaultPoints() {
 			return app.getCubePoints(200);
-			//~ return [
-				//~ createPoint(-100, -100, -100),	// 0 left top front
-				//~ createPoint(100, -100, -100), 	// 1 right top front
-				//~ createPoint(100, 100, -100),  	// 2 right bottom front 
-				//~ createPoint(-100, 100, -100),	// 3 left bottom front
-				//~ createPoint(-100, -100, 100),	// 4 left top back
-				//~ createPoint(100, -100, 100),	// 5 right top back
-				//~ createPoint(100, 100, 100),		// 6 right bottom back
-				//~ createPoint(-100, 100,  100)	// 7 left bottom back				
-			//~ ];
 		}
 
 		function createPrimitives() {
