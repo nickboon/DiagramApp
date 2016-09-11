@@ -1,11 +1,9 @@
 /* requires canvas, perspective, transformation, stage */
 (function (app) {
 	app.createDefaultFullScreenDiagram = function() {
-		var canvasWidth = window.innerWidth,
-			canvasHeight = window.innerHeight,
-			canvas = app.createCanvasObject(canvasWidth, canvasHeight),
-			vanishingPointX = canvasWidth / 2,
-			vanishingPointY = canvasHeight / 2,
+		var canvas = app.createCanvasObject(),
+			vanishingPointX = canvas.getWidth() / 2,
+			vanishingPointY = canvas.getHeight() / 2,
 			stage;
 			
 		perspective = app.createPerspectiveObject(vanishingPointX, vanishingPointY);
