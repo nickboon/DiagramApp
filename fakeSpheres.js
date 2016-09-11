@@ -64,6 +64,11 @@
 			};
 		}
 		
+		if (!perspective) {
+			throw 'You need to pass in a perspective object to create fake spheres.';
+		}
+
+		
 		return {
 			create: create,
 			createStroke: createStroke

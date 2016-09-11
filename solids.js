@@ -36,7 +36,7 @@
 				];
 			}
 			
-			if(points && points.length !== 8) {
+			if (points && points.length !== 8) {
 				throw "You need 8 vertices for a hexahedron.";
 			}				
 			points = points || createDefaultPoints();
@@ -47,6 +47,10 @@
 			};
 		}
 
+		if (!primitives) {
+			throw 'You need to pass a primitives object to create solids.';
+		}
+		
 		return {
 			createHexahedron: createHexahedron
 		};

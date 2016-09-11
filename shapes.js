@@ -44,6 +44,10 @@
 			};			
 		}			
 		
+		if (!drawing) {
+			throw 'You need to pass in a drawing object to create shapes.';
+		}
+		
 		return {
 			createLabel: createLabel,
 			createCircle: createCircle,

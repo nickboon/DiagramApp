@@ -78,6 +78,10 @@
 			};	
 		}
 		
+		if (!drawing) {
+			throw 'You need to pass in a drawing object to create primitives.';
+		}
+		
 		return {
 			toSolid: toSolid,
 			createLine: createLine,

@@ -1,7 +1,7 @@
 (function (app) {	
 	// create and return API for this module
 	app.createStageObject = function (canvas, perspective) {					
-		var drawingContext = canvas.getContext('2d')
+		var drawingContext,
 			primitives = [],
 			transformers = [];
 
@@ -56,6 +56,13 @@
 				draw();
 		}
 	
+		if (!canvas || !perspective) {
+			throw 'To create a stage you must pass it a canvas and a perspective object.';
+		}
+		
+		drawingContext = canvas.getDrawingContext();
+		canvas = canvas.getHtmlElement();
+		
 		return {
 			setSolids: setSolids,
 			setTransformers: setTransformers,

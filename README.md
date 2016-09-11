@@ -5,6 +5,6 @@ This code was based on that a spinning cube tutorial by Keith Peters and Billy L
 https://github.com/lamberta/html5-animation
 
 
-The general idea is to build solids from primitives and add them to a stage, which can then be animated. The movements of the solids on the stage are controlled by a transformer.
+The general idea is to build solids from primitives and add them to a stage, which can then be animated. The movements of the solids on the stage are controlled by transformers, which act on the points passed to them.
 
 See the test.html and testApp.js file for an example.

@@ -117,6 +117,10 @@
 			context.restore();
 		};
 			
+		if (!perspective) {
+			throw 'You need to pass in a perspectie object to create 3d drawings.';
+		}
+			
 		return {
 			drawLabel: drawLabel,
 			drawLine: drawLine,

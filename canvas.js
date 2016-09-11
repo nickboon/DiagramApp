@@ -1,26 +1,29 @@
 (function (app) {
-	app.createCanvasObject = function () {
-		var canvas = document.getElementById('canvas');
+	app.createCanvasObject = function (width, height, canvasId) {
+		
+		var defaultCanvasId = 'canvas',
+		htmlElement;
 
-		function init(width, height) {
-			canvas.width  = width;
-			canvas.height = height;
-
-			return canvas;
-		}
-			
 		function getDrawingContext() {
-			return canvas.getContext('2d');
+			return htmlElement.getContext('2d');
 		}	
 			
 		function getCenter() {
-			return {x: canvas.width / 2, y: canvas.height / 2};
+			return {x: htmlElement.width / 2, y: htmlElement.height / 2};
 		}	
-
+		
+		function getHtmlElement() {
+				return htmlElement
+		}
+		
+		htmlElement = document.getElementById(canvasId || defaultCanvasId);
+		htmlElement.width  = width;
+		htmlElement.height = height;
+ 
 		return {
-			init: init,
 			getDrawingContext: getDrawingContext,
-			getCenter: getCenter
+			getCenter: getCenter,
+			getHtmlElement: getHtmlElement
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

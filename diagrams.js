@@ -3,7 +3,7 @@
 	app.createDefaultFullScreenDiagram = function() {
 		var canvasWidth = window.innerWidth,
 			canvasHeight = window.innerHeight,
-			canvas= app.createCanvasObject().init(canvasWidth, canvasHeight),
+			canvas = app.createCanvasObject(canvasWidth, canvasHeight),
 			vanishingPointX = canvasWidth / 2,
 			vanishingPointY = canvasHeight / 2,
 			stage;

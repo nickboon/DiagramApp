@@ -4,11 +4,6 @@
 	
 	// create and return API for this module
 	app.createPerspectiveObject = function (vanishingPointX, vanishingPointY, f) {
-		if(!vanishingPointX || !vanishingPointY) {
-			throw 'You need to pass in coordinates for the vanishing point to create a perspective object';
-		}
-		focalLength = f || defaultFocalLength;
-		
 		function getScale(point) {
 			return focalLength / (focalLength + point.z);
 		}
@@ -34,6 +29,11 @@
 		function shiftVanishingPointY(shiftY) {	
 			vanishingPointY += shiftY;	
 		}	
+		
+		if(!vanishingPointX || !vanishingPointY) {
+			throw 'You need to pass in coordinates for the vanishing point to create a perspective object';
+		}
+		focalLength = f || defaultFocalLength;
 		
 		return {
 			getScale: getScale,
