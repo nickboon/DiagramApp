@@ -1,6 +1,6 @@
 (function (app) {
 	var numberOfDegrees = 360,
-		defaultAngle = Math.PI * 2 / numberOfDegrees,
+		incrementAngle = Math.PI * 2 / numberOfDegrees,
 		defaultShift = .5;
 
 	function rotatePointAboutX(point, angle) {
@@ -50,7 +50,7 @@
 	function createKeyboardDrivenTransformer(solids, s) {
 		var	speed = s || 1;
 			points = [],
-			angle = defaultAngle * speed;
+			angle = incrementAngle * speed;
 			angleX = 0,
 			angleY = 0,
 			shift = defaultShift * speed,
@@ -153,7 +153,7 @@
 	
 	function createAutoYRotationTransformer(solids) {		
 		var points = [],
-		angle = defaultAngle;
+		angle = incrementAngle;
 	
 		function autoRotate(point) {
 			rotatePointAboutY(point, angle);
@@ -188,7 +188,7 @@
 			copyPointAndRotate: copyPointAndRotate,
 			createKeyboardDrivenTransformer: createKeyboardDrivenTransformer,
 			createAutoYRotationTransformer: createAutoYRotationTransformer,
-			angle: defaultAngle
+			incrementAngle: incrementAngle
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

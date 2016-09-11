@@ -1,7 +1,10 @@
-/* requires */
 (function (app) {
-	app.getCubePoints = function (width) {
-		var halfWidth = width / 2;
+	//config
+	var defaultWidth = 200;
+	
+	app.getCubePoints = function (w) {		
+		var width = w || defaultWidth,
+			halfWidth = width / 2;
 	
 		return [
 			{ x: -halfWidth, y: -halfWidth, z: -halfWidth},	// 0 left top front

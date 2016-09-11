@@ -66,7 +66,6 @@
 			transformation = app.createTransformationObject(),
 			autoTransformer = transformation.createAutoYRotationTransformer(solidsList),
 			inputTranformer = transformation.createKeyboardDrivenTransformer(solidsList);
-
 			
 		 diagram.stage.setSolids(solidsList);
 		 diagram.stage.setTransformers([autoTransformer, inputTranformer]);

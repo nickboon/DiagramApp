@@ -1,10 +1,10 @@
 (function (app) {		
-	var angleBetweenFaceDiagonalAndCubeDiagonal = Math.atan(1 / Math.sqrt(2)),
-			angleBetweenEdgeAndCubeDiagonal = Math.atan(Math.sqrt(2)),
+	var ANGLE_BETWEEN_FACE_DAIGONAL_AND_CUBE_DIAGONAL = Math.atan(1 / Math.sqrt(2)),
+			ANGLE_BETWEEN_EDGE_AND_CUBE_DIAGONAL = Math.atan(Math.sqrt(2)),			
 			angleAtCenterBetweenVerticesSeparatedByAnEdge =
-			  angleBetweenFaceDiagonalAndCubeDiagonal * 2,
+			  ANGLE_BETWEEN_FACE_DAIGONAL_AND_CUBE_DIAGONAL * 2,
 			angleAtCenterBetweenVerticesSeparatedByAFaceDiagonal =
-				angleBetweenEdgeAndCubeDiagonal * 2;
+				ANGLE_BETWEEN_EDGE_AND_CUBE_DIAGONAL * 2;
 
 	function getFaceDiagonal(width) {
 		return Math.sqrt(2) * width;
@@ -19,8 +19,8 @@
 		return {
 			getFaceDiagonal: getFaceDiagonal,
 			getCubeDiagonal: getCubeDiagonal,
-			angleBetweenFaceDiagonalAndCubeDiagonal: angleBetweenFaceDiagonalAndCubeDiagonal,
-			angleBetweenEdgeAndCubeDiagonal: angleBetweenEdgeAndCubeDiagonal,
+			angleBetweenFaceDiagonalAndCubeDiagonal: ANGLE_BETWEEN_FACE_DAIGONAL_AND_CUBE_DIAGONAL,
+			angleBetweenEdgeAndCubeDiagonal: ANGLE_BETWEEN_EDGE_AND_CUBE_DIAGONAL,
 			angleAtCenterBetweenVerticesSeparatedByAnEdge: angleAtCenterBetweenVerticesSeparatedByAnEdge,
 			angleAtCenterBetweenVerticesSeparatedByAFaceDiagonal: angleAtCenterBetweenVerticesSeparatedByAFaceDiagonal
 		};

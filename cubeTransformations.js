@@ -1,9 +1,7 @@
 /* requires cueGeometry, transformations */
 (function (app) {
-	// config
-	var	defaultWidth = 200,
 	// objects from dependancies
-		transformations = app.createTransformationObject(),
+	var	transformations = app.createTransformationObject(),
 		rotateAboutX = transformations.rotatePointAboutX,
 		rotateAboutY = transformations.rotatePointAboutY,
 		cubeGeometry = app.createCubeGeometryObject(),				
@@ -30,9 +28,8 @@
 	}	
 	
 	// create and return API for this module
-	app.createCubeTransformationsObject = function (w) {
-		var width = w || defaultWidth,
-			points = app.getCubePoints(width);
+	app.createCubeTransformationsObject = function (width) {
+		var points = app.getCubePoints(width);
 		
 		function rotateCubeAboutY(a) {
 			var angle = a || 0;
