@@ -1,64 +1,19 @@
-/* required diagrams, points, primitives, shapes, solids, cubeTransformations */
-(function (app) {
-	var testResultsDiv;
+/* requires test, diagrams, points, primitives, shapes, solids, cubeTransformations */
+(function (app) {				
+	function trimAngleUnitTests() {
+		var	test = app.createTestObject(
+				'Given a transformationObject with numberOfRotationalIncrements 5, test return values for the trimAngle method.',
+				app.createTransformationObject(null, 5).trimAngle
+			);
+			
+		test.assertInputExpectedOutput(8, 3);			
+		test.assertInputExpectedOutput(-2, 3);			
+		test.assertInputExpectedOutput(-21, 4);			
+		test.assertInputExpectedOutput(-20, 0);			
+		test.assertInputExpectedOutput(0, 0);			
+		test.assertInputExpectedOutput(5, 0);			
+	}
 				
-	function functionName(fun) {
-	  var name = fun.toString();
-
-	  name = name.substr('function '.length);
-	  name = name.substr(0, name.indexOf('('));
-	  return name;
-	}
-			
-	function getTestResultClass(isPassed) {
-		return isPassed ? 'passed': 'failed';
-	}	
-		
-	function displayTestResult(resultText, isPassed) {
-		var resultDiv = document.createElement('div'),
-			resultTextNode = document.createTextNode(resultText);
-
-		resultDiv.setAttribute('class', getTestResultClass(isPassed));
-		resultDiv.appendChild(resultTextNode);
-		testResultsDiv.appendChild(resultDiv);
-	}	
-		
-	function assertEqual(setupText, expected, actual) {
-		var	isPassed = (expected === actual),
-			resultText = setupText
-				+ ", expected: " + expected 
-				+ " actual: " + actual;
-		
-			displayTestResult(resultText, isPassed)					
-	}	
-		
-	function createTransformationObject_trimAngle() {
-		var	input,
-			expected,
-			actual,
-			numberOfRotationalIncrements = 5,
-			transformation = app.createTransformationObject(
-				null, numberOfRotationalIncrements
-			),			
-			sut = transformation.trimAngle;
-			
-		// test
-		input = 8
-		actual = sut(input);
-		
-		//assert
-		expected =  3;
-		assertEqual(
-			functionName(sut) + ": Given an input of " + input, expected, actual
-		);			
-	}
-	
-	function runUnitTests() {
-		createTransformationObject_trimAngle();
-		
-	}
-	
-			
 	function createLabelsForCubeVertices(points, primitives, shapes) {
 		var labelSolids = [],
 		i,
@@ -94,24 +49,19 @@
 	}
 	
 	app.run = function () {
-		var 
-			diagram = app.createDefaultFullScreenDiagram(),
+		var diagram = app.createDefaultFullScreenDiagram(),
 			stage = diagram.stage,
 			perspective = diagram.perspective, 			
 			solids = createSolids(perspective),
 			transformation = app.createTransformationObject(),
 			transformer = transformation.createKeyboardDrivenTransformer(solids);
-				
-				solids[0].points.forEach(function (point) {					
-					transformation.rotatePointAboutY(point, 45);					
-				}); 
-			
+							
+		trimAngleUnitTests();
 
-		// unit tests
-		testResultsDiv = document.getElementById('test_results');
-		runUnitTests();
+		solids[0].points.forEach(function (point) {					
+			transformation.rotatePointAboutY(point, 45);					
+		}); 
 
-		// acceptance tests
 		stage.setSolids(solids);
 		stage.setTransformers([transformer]);
 	}
