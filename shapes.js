@@ -1,18 +1,22 @@
 /* requires drawing */
 (function (app) {
 	// create and return API for this module	
-	app.createShapesObject = function (drawing) {		
+	app.createShapesObject = function (drawing, vectorDrawing) {		
 		function createLabel (text, point, colour, alpha, size, isScaled) {		
 			return {
 				points: [point],
 				
-				getNearestZ: function getNearestZ() {
+				getNearestZ: function () {
 					return point.z;			
 				},
 				
-				draw: function draw(drawingContext) {
+				draw: function (drawingContext) {
 					drawing.drawLabel(drawingContext, text, point, colour, alpha, size, isScaled);
-				}			
+				},
+
+				getSvg: function () {
+					return vectorDrawing.label(text, point, colour, alpha, size, isScaled);
+				}
 			};	
 		}
 		
@@ -20,27 +24,40 @@
 			return {
 				points: [point],
 				
-				getNearestZ: function getNearestZ() {
+				getNearestZ: function () {
 					return point.z;
 				},
 				
-				draw: function draw(drawingContext) {
+				draw: function (drawingContext) {
 					drawing.drawCircle(drawingContext, point, radius, colour, alpha);
-				} 			
+				}, 			
+
+				getSvg: function () {
+					return vectorDrawing.circle(point, radius, colour, alpha);
+				}
 			};			
 		}
+		
+		function getReflectionX(point) {
+			return {x: point.x, y: -point.y, z: point.z};
+		}
+
 		
 		function createCircularFill(point, radius, colour, alpha) {
 			return {
 				points: [point],
 				
-				getNearestZ: function getNearestZ() {
+				getNearestZ: function () {
 					return point.z;
 				},
 				
-				draw: function draw(drawingContext) {
+				draw: function (drawingContext) {
 					drawing.drawCircularFill(drawingContext, point, radius, colour, alpha);
-				} 			
+				},
+
+				getSvg: function () {
+					return vectorDrawing.circularFill(point, radius, colour, alpha);
+				}		
 			};			
 		}			
 		

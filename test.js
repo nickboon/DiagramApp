@@ -1,7 +1,16 @@
 (function (app) {
 	// config
 	var defaultDisplayDivId = 'test_results';
+
+	function getRandomNumberBetween(min, max) {
+		return Math.floor(Math.random() * (max - min + 1) + min);
+	}	
 	
+	function createNumberFixture() {
+		return getRandomNumberBetween(-100, 100);			
+	}
+		
+
 	// create and return API for this module
 	app.createTestObject = function (definition, sut, displayDivId) {
 		var testResultsDiv = document.getElementById(displayDivId || defaultDisplayDivId);			
@@ -20,11 +29,37 @@
 		}	
 			
 		function assertEqual(setupText, expected, actual) {
+			var resultText;
+			
+			if (!setupText) {
+				setupText = "";
+			}
+			
 			displayTestResult(
 				resultText = setupText
 					+ " expected: " + expected 
 					+ " actual: " + actual,
 				(expected === actual)
+			);
+		}	
+		
+		function assertGreaterThan(setupText, expectedLarger,  expectedSmaller) {
+			var passed = (expectedLarger > expectedSmaller),
+				resultText,
+				assertionText = passed ? ' > ' : ' is not > ';
+			
+			if (!setupText) {
+				setupText = "";
+			}
+
+			
+			
+			displayTestResult(
+				resultText = setupText
+					+ expectedLarger
+					+ assertionText
+					+ expectedSmaller,
+				passed
 			);
 		}	
 		
@@ -57,7 +92,9 @@
 		
 		return {
 			assertEqual: assertEqual,
-			assertInputExpectedOutput: assertInputExpectedOutput
+			assertGreaterThan: assertGreaterThan,
+			assertInputExpectedOutput: assertInputExpectedOutput,
+			createNumberFixture: createNumberFixture
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

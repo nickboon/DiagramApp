@@ -3,23 +3,31 @@
 	// create and return API for this module		
 	app.createFakeSpheresObject = function (perspective) {
 		var drawing = app.createDrawingObject(perspective),
-			shapes = app.createShapesObject(drawing);				
-
+			vectorDrawing = app.createVectorDrawingObject(perspective),
+			shapes = app.createShapesObject(drawing, vectorDrawing);				
+			
 		function createFakeSphereFill(point, radius, apparentRadius, colour, alpha) {
+			var fill = shapes.createCircularFill(point, apparentRadius, colour, alpha);
+				//reflectionX = shapes.createCircularFill(getReflectionX(point), apparentRadius, colour, alpha - .2);
+			 			
 			return {			
 				getNearestZ: function getNearestZ() {
 					return point.z - radius;
 				},
-				draw: shapes.createCircularFill(point, apparentRadius, colour, alpha).draw
+				draw: fill.draw,
+				getSvg: fill.getSvg			
 			};			
 		}	
 						
 		function createFakeSphereEdge(point, apparentRadius, colour, alpha) {
+			var circle = shapes.createCircle(point, apparentRadius, colour, alpha);
+			
 			return {			
 				getNearestZ: function getNearestZ() {
 					return point.z
 				},
-				draw: shapes.createCircle(point, apparentRadius, colour, alpha).draw
+				draw: circle.draw,
+				getSvg: circle.getSvg
 			};			
 		}	
 

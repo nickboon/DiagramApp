@@ -8,9 +8,9 @@
 			primitives: [primitive]
 		};		
 	}
-			
+	
 	// create and return API for this module
-	app.createPrimitivesObject = function (drawing) {		
+	app.createPrimitivesObject = function (drawing, vectorDrawing) {		
 		function createLine(p, b, c, a) {
 			var pointA = p,
 				pointB = b,
@@ -24,14 +24,18 @@
 			return {
 				points: [pointA, pointB],
 				
-				getNearestZ: function getNearestZ() {
+				getNearestZ: function () {
 					return Math.min(pointA.z, pointB.z);			
 				},
 				
-				draw: function draw(drawingContext) {
+				draw: function (drawingContext) {
 					drawing.drawLine(drawingContext, pointA, pointB, colour, alpha);
 				}, 	
 
+				getSvg : function () {
+					return vectorDrawing.line(pointA, pointB, colour, alpha);
+				},
+				
 				setColour: function (newColour) {
 					colour = newColour;
 				},
@@ -50,13 +54,17 @@
 			return {
 				points: [pointA, pointB, pointC, pointD],
 
-				getNearestZ: function getNearestZ() {
+				getNearestZ: function () {
 					return Math.min(pointA.z, pointD.z);			
 				},
 				
-				draw: function draw(drawingContext) {
+				draw: function (drawingContext) {
 					drawing.drawCurve(drawingContext, pointA, pointB, pointC, pointD, colour, alpha);
-				}			
+				},			
+
+				getSvg : function () {
+					return vectorDrawing.curve(pointA, pointB, pointC, pointD, colour, alpha);
+				}
 			};	
 		}
 		
@@ -68,13 +76,17 @@
 			return {
 				points: points,
 				
-				getNearestZ: function getNearestZ() {
+				getNearestZ: function () {
 					return getNearestZFromArray(points);
 				},
 				
-				draw: function draw(drawingContext) {
+				draw: function (drawingContext) {
 					drawing.drawFill(drawingContext, points, colour, alpha);
-				} 			
+				}, 	
+
+				getSvg : function () {
+					return vectorDrawing.fill(points, colour, alpha);
+				}
 			};	
 		}
 		
