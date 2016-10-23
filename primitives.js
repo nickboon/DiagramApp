@@ -47,9 +47,9 @@
 		}
 		
 		function createCurve(pointA, pointB, pointC, pointD, colour, alpha) {
-			if(!pointA.x || !pointB.x || !pointC.x || !pointD.x) {
-				throw "You need at least 4 defined vertices for a curve.";
-			}
+			//if(!pointA.x || !pointB.x || !pointC.x || !pointD.x) {
+				//throw "You need at least 4 defined vertices for a curve.";
+			//} // fails if point.x = 0 maybe check if isNan?
 
 			return {
 				points: [pointA, pointB, pointC, pointD],
