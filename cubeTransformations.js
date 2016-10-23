@@ -29,7 +29,7 @@
 	
 	// create and return API for this module
 	app.createCubeTransformationsObject = function (width) {
-		var points = app.getCubePoints(width);
+		var points = app.createPointsObject().getCubePoints(width);
 		
 		function rotateCubeAboutY(a) {
 			var angle = a || 0;

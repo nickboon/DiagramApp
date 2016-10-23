@@ -1,14 +1,18 @@
 /* requires primitives , cubePoints*/
-(function (app) {					
+(function (app) {		
+	//config
+	var defaultWidth = 200;
+				
 	// create and return API for this module
 	app.createSolidsObject = function (primitives) {
 		function createHexahedron(points, lineColour, fillColour, alpha) {
-			var createPoint = app.createPointsObject().create,
+			var pointsObject = app.createPointsObject(),
+				createPoint = pointsObject.create,
 				createLine = primitives.createLine,
-				createFill = primitives.createFill;
+				createFill = primitives.createFill;			
 			
 			function createDefaultPoints() {
-				return app.getCubePoints();
+				return pointsObject.getCubePoints(defaultWidth);
 			}
 
 			function createPrimitives() {
@@ -52,7 +56,7 @@
 		}
 		
 		return {
-			createHexahedron: createHexahedron
+			createHexahedron: createHexahedron,
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
