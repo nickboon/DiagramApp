@@ -6,12 +6,12 @@
 				app.createTransformationObject(null, 5).trimAngle
 			);
 			
-		test.assertInputExpectedOutput(8, 3);			
-		test.assertInputExpectedOutput(-2, 3);			
-		test.assertInputExpectedOutput(-21, 4);			
-		test.assertInputExpectedOutput(-20, 0);			
-		test.assertInputExpectedOutput(0, 0);			
-		test.assertInputExpectedOutput(5, 0);			
+		test.assertInputExpectedOutput([8], 3);			
+		test.assertInputExpectedOutput([-2], 3);			
+		test.assertInputExpectedOutput([-21], 4);			
+		test.assertInputExpectedOutput([-20], 0);			
+		test.assertInputExpectedOutput([0], 0);			
+		test.assertInputExpectedOutput([5], 0);			
 	}
 				
 	function createLabelsForCubeVertices(points, primitives, shapes) {

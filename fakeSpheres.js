@@ -35,7 +35,7 @@
 			var nearPoint,
 				apparentRadius;
 				
-			point = point || app.createPointsObject().create;				
+			point = point || {x: 0, y: 0, z: 0};				
 			nearPoint = {x: point.x, y: point.y, z: point.z - radius};
 			apparentRadius = radius * perspective.getScale(nearPoint); 
 			
@@ -75,7 +75,6 @@
 		if (!perspective) {
 			throw 'You need to pass in a perspective object to create fake spheres.';
 		}
-
 		
 		return {
 			create: create,

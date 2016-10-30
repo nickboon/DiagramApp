@@ -10,10 +10,19 @@
 		return getRandomNumberBetween(-100, 100);			
 	}
 		
+	function createPointFixture() {
+		return {
+			x: createNumberFixture(),
+			y: createNumberFixture(),
+			z: createNumberFixture()
+		}
+	}	
+		
 
 	// create and return API for this module
 	app.createTestObject = function (definition, sut, displayDivId) {
-		var testResultsDiv = document.getElementById(displayDivId || defaultDisplayDivId);			
+		var allResultsDiv = document.getElementById(displayDivId || defaultDisplayDivId),
+			testResultsDiv = document.createElement('div');
 	
 		function getTestResultClass(isPassed) {
 			return isPassed ? 'passed': 'failed';
@@ -38,7 +47,7 @@
 			displayTestResult(
 				resultText = setupText
 					+ " expected: " + expected 
-					+ " actual: " + actual,
+					+ ". actual: " + actual,
 				(expected === actual)
 			);
 		}	
@@ -52,8 +61,6 @@
 				setupText = "";
 			}
 
-			
-			
 			displayTestResult(
 				resultText = setupText
 					+ expectedLarger
@@ -73,11 +80,15 @@
 		
 		/* if the provided sut is a method check expected output from a given input */
 		function assertInputExpectedOutput(input, expected) {
+			if(typeof sut != "function") {
+				throw "The provided sut is not a function";
+			}
+			
 			assertEqual(
-				getFunctionName(sut) + '(' + input + '); ', expected, sut(input)
+				getFunctionName(sut) + '(' + input + '); ', expected, sut.apply(null, input)
 			);
 		}
-					
+	
 		function displayDefinition(definitionText) {
 			var definitionH2 = document.createElement('h2'),
 				definitionTextNode = document.createTextNode(definitionText);
@@ -89,12 +100,15 @@
 		if (definition) {
 			displayDefinition(definition);			
 		}
+
+		allResultsDiv.append(testResultsDiv);
 		
 		return {
 			assertEqual: assertEqual,
 			assertGreaterThan: assertGreaterThan,
 			assertInputExpectedOutput: assertInputExpectedOutput,
-			createNumberFixture: createNumberFixture
+			createNumberFixture: createNumberFixture,
+			createPointFixture: createPointFixture
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
