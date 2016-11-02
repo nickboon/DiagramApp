@@ -50,6 +50,21 @@
 		return getHexahedronPoints(width, width, width);
 	}
 
+	function reflectPointAcrossZero(point, axis) {
+		var pointX = (axis === 'x') ? -point.x : point.x,
+			pointY = (axis === 'y') ? -point.y : point.y,
+			pointZ = (axis === 'z') ? -point.z : point.z;		
+		return {x: pointX, y: pointY, z: pointZ};
+	}
+
+	function reflectPointsAcrossZero(points, axis) {
+		var reflection = [];		
+		points.forEach(function (point) {
+			reflection.push(reflectPointAcrossZero(point, axis));
+		});		
+		return reflection;
+	}	
+	
 	// create and return API for this module	
 	app.createPointsObject = function () {
 		return {
@@ -57,7 +72,8 @@
 			copy: copy,
 			getNearestZFromArray, getNearestZFromArray,
 			getHexahedronPoints: getHexahedronPoints,
-			getCubePoints: getCubePoints
+			getCubePoints: getCubePoints,
+			reflectPointsAcrossZero: reflectPointsAcrossZero
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
