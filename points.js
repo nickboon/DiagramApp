@@ -49,6 +49,31 @@
 		}			
 		return getHexahedronPoints(width, width, width);
 	}
+	
+	function getPrismPoints(height, numberOfSides, radius) {
+		var topPoints = [],
+			basePoints = [],
+			halfHeight = height / 2,
+			angle = Math.PI * 2 / numberOfSides,
+			currentAngle,
+			i = numberOfSides - 1,
+			x,
+			y;
+
+		for(; i >= 0; i -= 1) {
+			currentAngle = angle * i;
+			x = Math.sin(currentAngle) * radius;
+			z = Math.cos(currentAngle) * radius;
+			
+			topPoints.push(create(x, -halfHeight, z));
+			basePoints.push(create(x, halfHeight, z));
+		}
+		
+		return {
+			topPoints: topPoints,
+			basePoints: basePoints			
+		}
+	}
 
 	function reflectPointAcrossZero(point, axis) {
 		var pointX = (axis === 'x') ? -point.x : point.x,
@@ -73,6 +98,7 @@
 			getNearestZFromArray, getNearestZFromArray,
 			getHexahedronPoints: getHexahedronPoints,
 			getCubePoints: getCubePoints,
+			getPrismPoints: getPrismPoints,
 			reflectPointsAcrossZero: reflectPointsAcrossZero
 		};
 	};
