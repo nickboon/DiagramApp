@@ -74,7 +74,12 @@
 			colour = colour || defaultLineColour;		
 			alpha = alpha || defaultAlpha;			
   
-			throw "Curve vector drawing not implemented!";
+			return '<path d="M' + getScreenY(points[0]) + ',' + getScreenY(points[0]) + ' ' + 
+				'C' + getScreenY(points[1]) + ',' + getScreenY(points[1]) + ' ' +
+					getScreenY(points[2]) + ',' + getScreenY(points[2]) + ' ' + 
+					getScreenY(points[3]) + ',' + getScreenY(points[3]) + ' ' +
+						
+				'Z" style="stroke: ' + colour + '" />';
 		}
 		
 		function fill(points, colour, alpha) {
@@ -142,6 +147,7 @@
 			printSvg: printSvg,
 			setKeyListenerForPrintSvg: setKeyListenerForPrintSvg,
 			line: line,
+			curve: curve,
 			fill: fill,
 			circularFill: circularFill,
 			circle: circle,
