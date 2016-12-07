@@ -97,6 +97,14 @@
 			testResultsDiv.appendChild(definitionH2);
 		}	
 		
+		function displaySpan(content) {
+			var span = document.createElement('span'),
+				spanTextNode = document.createTextNode(content);
+			
+			span.appendChild(spanTextNode);
+			testResultsDiv.appendChild(span);
+		}
+		
 		if (definition) {
 			displayDefinition(definition);			
 		}
@@ -108,7 +116,8 @@
 			assertGreaterThan: assertGreaterThan,
 			assertInputExpectedOutput: assertInputExpectedOutput,
 			createNumberFixture: createNumberFixture,
-			createPointFixture: createPointFixture
+			createPointFixture: createPointFixture,
+			note: displaySpan
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
