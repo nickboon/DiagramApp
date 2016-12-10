@@ -1,9 +1,16 @@
 (function (app) {
 	// config
 	var defaultFocalLength = 500;
+		defaultVanishingDistance = 1000,
+		defaultMaxAlpha = 1;
 	
 	// create and return API for this module
 	app.createPerspectiveObject = function (vanishingPointX, vanishingPointY, f) {
+		var focalLength,
+			vanishingDistance =  defaultVanishingDistance,
+			maxAlpha = defaultMaxAlpha;
+			
+		
 		function getScale(point) {
 			return focalLength / (focalLength + point.z);
 		}
@@ -30,6 +37,16 @@
 			vanishingPointY += shiftY;	
 		}	
 		
+		function getAtmosphericAlpha(primitiveZ) {
+			var range = primitiveZ + focalLength;
+			return (1 - (range / vanishingDistance)) * maxAlpha;
+		}
+		
+		function setAtmosphericPerspective(vanishingDistance, maxAlpha) {
+			vanishingDistance = v || defaultVanishingDistance,
+			maxAlpha = m || defaultMaxAlpha;			
+		}
+		
 		if(!vanishingPointX || !vanishingPointY) {
 			throw 'You need to pass in coordinates for the vanishing point to create a perspective object';
 		}
@@ -41,7 +58,10 @@
 			getScreenY: getScreenY,
 			isPointBehindViewer: isPointBehindViewer,
 			shiftVanishingPointX: shiftVanishingPointX,
-			shiftVanishingPointY: shiftVanishingPointY
+			shiftVanishingPointY: shiftVanishingPointY,
+			focalLength: focalLength,
+			setAtmosphericPerspective: setAtmosphericPerspective,
+			getAtmosphericAlpha: getAtmosphericAlpha
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

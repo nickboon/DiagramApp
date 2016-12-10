@@ -11,13 +11,8 @@
 	
 	// create and return API for this module
 	app.createPrimitivesObject = function (drawing, vectorDrawing) {		
-		function createLine(p, b, c, a) {
-			var pointA = p,
-				pointB = b,
-				colour = c,
-				alpha = a;
-			
-			if(!pointA || !pointB) {
+		function createLine(pointA, pointB, colour, alpha) {			
+			if(pointA.x === NaN || pointB === NaN) {
 				throw "You need at least 2 defined vertices for a line.";
 			}
 			
@@ -28,28 +23,20 @@
 					return Math.min(pointA.z, pointB.z);			
 				},
 				
-				draw: function (drawingContext) {
+				draw: function (drawingContext, alpha) {
 					drawing.drawLine(drawingContext, pointA, pointB, colour, alpha);
 				}, 	
 
 				getSvg : function () {
 					return vectorDrawing.line(pointA, pointB, colour, alpha);
-				},
-				
-				setColour: function (newColour) {
-					colour = newColour;
-				},
-				
-				setAlpha: function (newAlpha) {
-					alpha = newAlpha;
 				}
 			};	
 		}
 		
 		function createCurve(pointA, pointB, pointC, pointD, colour, alpha) {
-			//if(!pointA.x || !pointB.x || !pointC.x || !pointD.x) {
-				//throw "You need at least 4 defined vertices for a curve.";
-			//} // fails if point.x = 0 maybe check if isNan?
+			if(pointA.x === NaN || pointB.x === NaN|| pointC.x  === NaN || pointD.x === NaN) {
+				throw "You need at least 4 defined vertices for a curve.";
+			}
 
 			return {
 				points: [pointA, pointB, pointC, pointD],
@@ -58,7 +45,7 @@
 					return Math.min(pointA.z, pointD.z);			
 				},
 				
-				draw: function (drawingContext) {
+				draw: function (drawingContext, alpha) {
 					drawing.drawCurve(drawingContext, pointA, pointB, pointC, pointD, colour, alpha);
 				},			
 
@@ -80,7 +67,7 @@
 					return getNearestZFromArray(points);
 				},
 				
-				draw: function (drawingContext) {
+				draw: function (drawingContext, alpha) {
 					drawing.drawFill(drawingContext, points, colour, alpha);
 				}, 	
 

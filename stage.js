@@ -1,10 +1,10 @@
-(function (app) {	
+(function (app) {
 	// create and return API for this module
-	app.createStageObject = function (canvas, perspective) {					
+	app.createStageObject = function (canvas, perspective, hasAtmosphericPerspective) {					
 		var drawingContext,
 			primitives = [],
 			transformers = [];
-
+				
 		function addSolid(solid) {
 			primitives = primitives.concat(solid.primitives);
 		}
@@ -26,10 +26,17 @@
 			transformers.length = 0;
 			transformers = transformersArray;
 		}		
-										
+					
+		function drawPrimitivesWithAtmosphericPerspective(primitive) {
+			var primitiveZ = primitive.getNearestZ();			
+			if (perspective.isPointBehindViewer(primitiveZ)) {
+				primitive.draw(drawingContext, perspective.getAtmosphericAlpha(primitiveZ));
+			}
+		}
+							
 		function drawPrimitive(primitive) {
-			if (perspective.isPointBehindViewer(primitive.getNearestZ())) { 		
-				primitive.draw(drawingContext);
+			if (perspective.isPointBehindViewer(primitive.getNearestZ())) {
+				primitive.draw(drawingContext);					
 			}
 		}
 		
@@ -41,13 +48,20 @@
 			primitives.reverse();
 			primitives.forEach(drawPrimitive);
 		};
-		
-		function runTransformation(transformer) {
-			transformer.transform();		
+			
+		function drawWithAtmosphericPerspective() {
+			drawingContext.clearRect(0, 0, canvas.width, canvas.height);
+			primitives.sort(function (a, b) {
+				return a.getNearestZ() - b.getNearestZ();
+			});
+			primitives.reverse();
+			primitives.forEach(drawPrimitivesWithAtmosphericPerspective);
 		}
-		
+			
 		function transform() {		
-			transformers.forEach(runTransformation)
+			transformers.forEach(function (transformer) {
+				transformer.transform();						
+			});
 		}
 		
 		function animate() {
@@ -56,6 +70,12 @@
 				draw();
 		}
 	
+		function animateWithAtmosphericPerspective() {
+			window.requestAnimationFrame(animateWithAtmosphericPerspective, canvas);
+				transform();
+				drawWithAtmosphericPerspective();			
+		}
+		
 		if (!canvas || !perspective) {
 			throw 'To create a stage you must pass it a canvas and a perspective object.';
 		}
@@ -66,7 +86,7 @@
 		return {
 			setSolids: setSolids,
 			setTransformers: setTransformers,
-			animate: animate,
+			animate: hasAtmosphericPerspective ? animateWithAtmosphericPerspective : animate
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
