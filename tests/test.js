@@ -109,7 +109,7 @@
 			displayDefinition(definition);			
 		}
 
-		allResultsDiv.append(testResultsDiv);
+		allResultsDiv.appendChild(testResultsDiv);
 		
 		return {
 			assertEqual: assertEqual,

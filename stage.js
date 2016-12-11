@@ -1,6 +1,6 @@
 (function (app) {
 	// create and return API for this module
-	app.createStageObject = function (canvas, perspective, hasAtmosphericPerspective) {					
+	app.createStageObject = function (canvas, perspective) {					
 		var drawingContext,
 			primitives = [],
 			transformers = [];
@@ -86,7 +86,8 @@
 		return {
 			setSolids: setSolids,
 			setTransformers: setTransformers,
-			animate: hasAtmosphericPerspective ? animateWithAtmosphericPerspective : animate
+			animate: animate,
+			animateWithAtmosphericPerspective: animateWithAtmosphericPerspective
 		};
 	};
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

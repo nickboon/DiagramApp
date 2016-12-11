@@ -23,9 +23,9 @@
 	app.createFullScreenDiagramWithAtmosphericPerspective = function() {
 		var canvas = app.createCanvasObject(),
 			perspective = getDefaultPerspective(canvas);
-			stage = app.createStageObject(canvas, perspective, true);	
+			stage = app.createStageObject(canvas, perspective);	
 
-		stage.animate();	
+		stage.animateWithAtmosphericPerspective ();	
 
 		return {
 			perspective: perspective,

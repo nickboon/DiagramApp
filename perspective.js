@@ -6,7 +6,7 @@
 	
 	// create and return API for this module
 	app.createPerspectiveObject = function (vanishingPointX, vanishingPointY, f) {
-		var focalLength,
+		var focalLength = f || defaultFocalLength,
 			vanishingDistance =  defaultVanishingDistance,
 			maxAlpha = defaultMaxAlpha;
 			
@@ -42,7 +42,7 @@
 			return (1 - (range / vanishingDistance)) * maxAlpha;
 		}
 		
-		function setAtmosphericPerspective(vanishingDistance, maxAlpha) {
+		function setAtmosphericPerspective(v, m) {
 			vanishingDistance = v || defaultVanishingDistance,
 			maxAlpha = m || defaultMaxAlpha;			
 		}
@@ -50,7 +50,6 @@
 		if(!vanishingPointX || !vanishingPointY) {
 			throw 'You need to pass in coordinates for the vanishing point to create a perspective object';
 		}
-		focalLength = f || defaultFocalLength;
 		
 		return {
 			getScale: getScale,
