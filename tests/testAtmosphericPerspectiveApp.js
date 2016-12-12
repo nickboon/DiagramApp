@@ -11,6 +11,8 @@
 				focalLength = 500;
 						
 			sut.setAtmosphericPerspective(10000, 0.6);
+			test.note("With vanishingDistance " + vanishingDistance 
+				+ " and maxAlpha " + maxAlpha + ":");
 			test.assertInputExpectedOutput([vanishingDistance], 0);
 			test.assertInputExpectedOutput([-focalLength], maxAlpha);
 		}
