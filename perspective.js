@@ -39,6 +39,9 @@
 		
 		function getAtmosphericAlpha(primitiveZ) {
 			var range = primitiveZ + focalLength;
+			if(range >= vanishingDistance) {
+				return 0;
+			}
 			return (1 - (range / vanishingDistance)) * maxAlpha;
 		}
 		
