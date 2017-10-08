@@ -71,8 +71,8 @@
             x = Math.sin(currentAngle) * radius;
             z = Math.cos(currentAngle) * radius;
 
-            topPoints.push(create(x, -halfHeight, z));
-            basePoints.push(create(x, halfHeight, z));
+            topPoints.push({ x: x, y: -halfHeight, z: z });
+            basePoints.push({ x: x, y: halfHeight, z: z });
         }
 
         return {
