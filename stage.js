@@ -1,6 +1,6 @@
 (function(app) {
     // create and return API for this module
-    app.createStageObject = function(canvas, perspective, backgroundColour) {
+    app.createStageObject = function(canvas, perspective, background) {
         var drawingContext,
             primitives = [],
             transformers = [];
@@ -27,47 +27,41 @@
             transformers = transformersArray;
         }
 
-        function drawPrimitivesWithAtmosphericPerspective(primitive) {
-            var primitiveZ = primitive.getNearestZ();
-            if (perspective.isPointBehindViewer(primitiveZ)) {
-                primitive.draw(drawingContext, perspective.getAtmosphericAlpha(primitiveZ));
-            }
-        }
-
-        function drawPrimitive(primitive) {
-            if (perspective.isPointBehindViewer(primitive.getNearestZ())) {
-                primitive.draw(drawingContext);
-            }
-        }
-
         function drawBackground() {
-            if (backgroundColour) {
+            if (background) {
                 drawingContext.save();
-                drawingContext.fillStyle = backgroundColour;
+
+                drawingContext.fillStyle = background.colour;
                 drawingContext.fillRect(0, 0, canvas.width, canvas.height);
+
+                if (background.image) {
+                    var image = background.image,
+                        htmlElement = image.getHtmlElement();
+
+                    drawingContext.drawImage(htmlElement, image.x, image.y, image.width, image.height);
+                }
+
                 drawingContext.restore();
             }
         }
 
-        function draw() {
+        function draw(useAtmosphericPerspective) {
             drawingContext.clearRect(0, 0, canvas.width, canvas.height);
-            drawBackground();
-            primitives.sort(function(a, b) {
-                return a.getNearestZ() - b.getNearestZ();
-            });
-            primitives.reverse();
-            primitives.forEach(drawPrimitive);
-        };
 
-        function drawWithAtmosphericPerspective() {
-            drawingContext.clearRect(0, 0, canvas.width, canvas.height);
             drawBackground();
+
             primitives.sort(function(a, b) {
                 return a.getNearestZ() - b.getNearestZ();
             });
             primitives.reverse();
-            primitives.forEach(drawPrimitivesWithAtmosphericPerspective);
-        }
+
+            primitives.forEach(function(primitive) {
+                var primitiveZ = primitive.getNearestZ();
+                if (perspective.isPointBehindViewer(primitiveZ)) {
+                    primitive.draw(drawingContext, useAtmosphericPerspective ? perspective.getAtmosphericAlpha(primitiveZ) : undefined);
+                }
+            });
+        };
 
         function transform() {
             transformers.forEach(function(transformer) {
@@ -84,7 +78,7 @@
         function animateWithAtmosphericPerspective() {
             window.requestAnimationFrame(animateWithAtmosphericPerspective, canvas);
             transform();
-            drawWithAtmosphericPerspective();
+            draw(true);
         }
 
         if (!canvas || !perspective) {
