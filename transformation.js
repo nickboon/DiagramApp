@@ -124,9 +124,9 @@
                                 angleX -= angle;
                             }
                             break;
-                        case 113: //F2
-                            graphic_objects_3d.printSVG(thisStage);
-                            break;
+                            // case 113: //F2
+                            //     app.createVectorDrawingObject().printSVG(thisStage);
+                            //     break;
                         case 112: //F1 HELP PAGE
                             window.alert(
                                 '1. Arrow keys rotate model about the X and Y axis.\n' +
