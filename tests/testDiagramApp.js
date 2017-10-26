@@ -6,7 +6,7 @@
             copyOf = app.createPointsObject().copyOf;
 
         for (i = points.length - 1; i >= 0; i -= 1) {
-            primitive = (
+            var primitive = (
                 shapes.createLabel('vertex no.' + i,
                     copyOf(points[i]),
                     '#bb2222',
