@@ -64,7 +64,7 @@
             currentAngle,
             i = numberOfSides - 1,
             x,
-            y;
+            z;
 
         for (; i >= 0; i -= 1) {
             currentAngle = angle * i;
@@ -141,8 +141,7 @@
             copyOf: copyOf,
             shiftTo: shiftTo,
             shiftBy: shiftBy,
-            getNearestZFromArray,
-            getNearestZFromArray,
+            getNearestZFromArray: getNearestZFromArray,
             getHexahedronPoints: getHexahedronPoints,
             getCubePoints: getCubePoints,
             getPrismPoints: getPrismPoints,

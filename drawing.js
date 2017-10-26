@@ -1,6 +1,4 @@
-/* requires colours, perspective */
 (function(app) {
-    // config
     var defaultLineColour = '#000000',
         defaultFillColour = '#FFFFFF',
         defaultAlpha = .8,
@@ -8,12 +6,9 @@
             size: 20,
             type: 'sans-serif'
         },
-        // objects from dependancies
         colours = app.createColourObject(),
-        // constants
         CIRCLE_ARC = 2 * Math.PI;
 
-    // create and return API for this module
     app.createDrawingObject = function(perspective) {
         var getScreenX = perspective.getScreenX,
             getScreenY = perspective.getScreenY,
@@ -33,7 +28,7 @@
             context.font = size + 'px ' + type;
             context.fillText(text, getScreenX(point), getScreenY(point));
             context.restore();
-        };
+        }
 
         function drawLine(context, pointA, pointB, colour, alpha) {
             colour = colour || defaultLineColour;
@@ -115,10 +110,10 @@
             context.closePath();
             context.fill();
             context.restore();
-        };
+        }
 
         if (!perspective) {
-            throw 'You need to pass in a perspectie object to create 3d drawings.';
+            throw 'You need to pass in a perspective object to create 3d drawings.';
         }
 
         return {
@@ -127,8 +122,7 @@
             drawCurve: drawCurve,
             drawCircle: drawCircle,
             drawFill: drawFill,
-            drawCircularFill,
-            drawCircularFill
+            drawCircularFill: drawCircularFill,
         };
     };
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

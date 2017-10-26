@@ -1,5 +1,4 @@
 (function(app) {
-    // create and return API for this module
     app.createVector3dObject = function() {
         return {
             add: function(vectorA, vectorB) {

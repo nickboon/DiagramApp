@@ -11,7 +11,7 @@
         point.y = newY;
         point.z = newZ;
         return point;
-    };
+    }
 
     function rotatePointAboutXAtPivot(point, angle, pivot) {
         var cosX = Math.cos(angle),
@@ -31,7 +31,7 @@
         point.x = newX;
         point.z = newZ;
         return point;
-    };
+    }
 
     function rotatePointAboutYAtPivot(point, angle, pivot) {
         var cosY = Math.cos(angle),
@@ -51,7 +51,7 @@
         point.x = newX;
         point.y = newY;
         return point;
-    };
+    }
 
     function rotatePointAboutZAtPivot(point, angle, pivot) {
         var cosZ = Math.cos(angle),
@@ -77,77 +77,74 @@
     }
 
     function createKeyboardDrivenTransformer(solids, s) {
-        var speed = s || 1;
-        points = [],
-            angle = incrementAngle * speed;
-        angleX = 0,
+        var speed = s || 1,
+            points = [],
+            angle = incrementAngle * speed,
+            angleX = 0,
             angleY = 0,
             shift = defaultShift * speed,
             shiftX = 0,
-            shiftZ = 0,
+            shiftZ = 0;
 
-            (function addKeyboardListener() {
-                window.addEventListener('keydown', function(event) {
-                    switch (event.keyCode) {
-                        case 32: //SPACE
-                            event.preventDefault();
-                            break;
-                        case 37: //LEFT
-                            event.preventDefault();
-                            if (event.keyCode === 37 && event.shiftKey) {
-                                shiftX -= shift;
-                            } else {
-                                angleY -= angle;
-                            }
-                            break;
-                        case 38: //UP
-                            event.preventDefault();
-                            if (event.keyCode === 38 && event.shiftKey) {
-                                shiftZ -= shift;
-                            } else {
-                                angleX += angle;
-                            }
-                            break;
-                        case 39: //RIGHT
-                            event.preventDefault();
-                            if (event.keyCode === 39 && event.shiftKey) {
-                                shiftX += shift;
-                            } else {
-                                angleY += angle;
-                            }
-                            break;
-                        case 40: //DOWN
-                            event.preventDefault();
-                            if (event.keyCode === 40 && event.shiftKey) {
-                                shiftZ += shift;
-                            } else {
-                                angleX -= angle;
-                            }
-                            break;
-                            // case 113: //F2
-                            //     app.createVectorDrawingObject().printSVG(thisStage);
-                            //     break;
-                        case 112: //F1 HELP PAGE
-                            window.alert(
-                                '1. Arrow keys rotate model about the X and Y axis.\n' +
-                                '2. SHIFT + UP and SHIFT + DOWN shift model along Z axis.\n' +
-                                '3. SHIFT + LEFT and SHIFT + RIGHT shift model along X axis.\n'
-                            );
-                            break;
-                    }
-                }, false);
-                window.addEventListener('keyup', function(event) {
-                    switch (event.keyCode) {
-                        case 38: //up
-                        case 40: //down
-                        case 37: //left
-                        case 39: //right
-                            angleX = angleY = 0;
-                            shiftZ = shiftX = 0;
-                            break;
-                    }
-                }, false);
-            })();
+        (function addKeyboardListener() {
+            window.addEventListener('keydown', function(event) {
+                switch (event.keyCode) {
+                    case 32: //SPACE
+                        event.preventDefault();
+                        break;
+                    case 37: //LEFT
+                        event.preventDefault();
+                        if (event.keyCode === 37 && event.shiftKey) {
+                            shiftX -= shift;
+                        } else {
+                            angleY -= angle;
+                        }
+                        break;
+                    case 38: //UP
+                        event.preventDefault();
+                        if (event.keyCode === 38 && event.shiftKey) {
+                            shiftZ -= shift;
+                        } else {
+                            angleX += angle;
+                        }
+                        break;
+                    case 39: //RIGHT
+                        event.preventDefault();
+                        if (event.keyCode === 39 && event.shiftKey) {
+                            shiftX += shift;
+                        } else {
+                            angleY += angle;
+                        }
+                        break;
+                    case 40: //DOWN
+                        event.preventDefault();
+                        if (event.keyCode === 40 && event.shiftKey) {
+                            shiftZ += shift;
+                        } else {
+                            angleX -= angle;
+                        }
+                        break;
+                    case 112: //F1 HELP PAGE
+                        window.alert(
+                            '1. Arrow keys rotate model about the X and Y axis.\n' +
+                            '2. SHIFT + UP and SHIFT + DOWN shift model along Z axis.\n' +
+                            '3. SHIFT + LEFT and SHIFT + RIGHT shift model along X axis.\n'
+                        );
+                        break;
+                }
+            }, false);
+            window.addEventListener('keyup', function(event) {
+                switch (event.keyCode) {
+                    case 38: //up
+                    case 40: //down
+                    case 37: //left
+                    case 39: //right
+                        angleX = angleY = 0;
+                        shiftZ = shiftX = 0;
+                        break;
+                }
+            }, false);
+        })();
 
         function shiftRotatePoint(point) {
             rotatePointAboutX(point, angleX);
@@ -205,7 +202,7 @@
         return {
             transform: transform
         };
-    };
+    }
 
     function createAutoRotationAbout(axis, solids) {
         var points = [];
@@ -239,13 +236,8 @@
         return {
             transform: transform
         };
-    };
+    }
 
-
-
-
-
-    // create and return API for this module
     app.createTransformationObject = function() {
         return {
             rotatePointAboutX: rotatePointAboutX,

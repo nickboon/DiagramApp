@@ -1,4 +1,3 @@
-/* requires drawing */
 (function(app) {
     var getNearestZFromArray = app.createPointsObject().getNearestZFromArray;
 
@@ -9,10 +8,9 @@
         };
     }
 
-    // create and return API for this module
     app.createPrimitivesObject = function(drawing, vectorDrawing) {
         function createLine(pointA, pointB, colour, alpha) {
-            if (pointA.x === NaN || pointB === NaN) {
+            if (isNaN(pointA.x) || isNaN(pointB.x)) {
                 throw "You need at least 2 defined vertices for a line.";
             }
 
@@ -34,7 +32,7 @@
         }
 
         function createCurve(points, colour, alpha) {
-            if (points[0].x === NaN || points[1].x === NaN || points[3].x === NaN || points[3].x === NaN) {
+            if (isNaN(points[0].x) || isNaN(points[1]) || isNaN(points[2].x) || isNaN(points[3])) {
                 throw "You need at least 4 defined vertices for a curve.";
             }
 

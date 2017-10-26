@@ -1,10 +1,8 @@
 (function(app) {
-    // config
-    var defaultFocalLength = 500;
-    defaultVanishingDistance = 1000,
+    var defaultFocalLength = 500,
+        defaultVanishingDistance = 1000,
         defaultMaxAlpha = 1;
 
-    // create and return API for this module
     app.createPerspectiveObject = function(vanishingPointX, vanishingPointY, f) {
         var focalLength = f || defaultFocalLength,
             vanishingDistance = defaultVanishingDistance,

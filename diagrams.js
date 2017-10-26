@@ -6,7 +6,6 @@
         return app.createPerspectiveObject(vanishingPointX, vanishingPointY);
     }
 
-    // make diagrams object with arternative create digrams methods
     app.createDefaultFullScreenDiagram = function(backgroundColour) {
         var canvas = app.createCanvasObject(),
             perspective = getDefaultPerspective(canvas),

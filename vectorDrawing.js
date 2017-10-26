@@ -1,8 +1,6 @@
 /* requires */
 (function(app) {
-    var colours = app.createColourObject(),
-
-        defaultLineColour = '#000000',
+    var defaultLineColour = '#000000',
         defaultFillColour = '#FFFFFF',
         defaultAlpha = .8,
         defaultFont = {
@@ -52,7 +50,7 @@
                 sortPrimitives();
 
                 primitives.forEach(function(primitive) {
-                    svgString += primitive.getSvg();;
+                    svgString += primitive.getSvg();
                 });
             },
             svgString = SVG_PREFIX;
@@ -62,7 +60,6 @@
         return svgString + SVG_SUFFIX;
     }
 
-    // create and return API for this module
     app.createVectorDrawingObject = function(perspective) {
         var getScreenX = perspective.getScreenX,
             getScreenY = perspective.getScreenY,
@@ -105,7 +102,7 @@
 
             for (i = points.length - 1; i >= 0; i -= 1) {
                 lines += getScreenX(points[i]) + ',' + getScreenY(points[i]) + ' '
-            };
+            }
 
             return '<polygon ' +
                 'points="' + lines + '" ' +
@@ -144,7 +141,7 @@
 
             if (isScaled) {
                 size *= scale(point);
-            };
+            }
 
             return '<text ' +
                 'x="' + getScreenX(point) + '"  ' +

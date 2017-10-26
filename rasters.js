@@ -20,7 +20,6 @@
         }
 
         image.centreIn = function(container) {
-
             var hRatio = 0,
                 vRatio = 0,
                 ratio = 0;

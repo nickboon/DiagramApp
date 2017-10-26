@@ -1,5 +1,4 @@
 (function(app) {
-    // create and return API for this module
     app.createStageObject = function(canvas, perspective, background) {
         var drawingContext,
             primitives = [],
@@ -7,12 +6,6 @@
 
         function addSolid(solid) {
             primitives = primitives.concat(solid.primitives);
-        }
-
-        function addSolids(solidArray) {
-            for (var i = solidArray.length - 1; i >= 0; i -= 1) {
-                addSolid(solidArray[i]);
-            }
         }
 
         function setSolids(solidArray) {
@@ -61,7 +54,7 @@
                     primitive.draw(drawingContext, useAtmosphericPerspective ? perspective.getAtmosphericAlpha(primitiveZ) : undefined);
                 }
             });
-        };
+        }
 
         function transform() {
             transformers.forEach(function(transformer) {

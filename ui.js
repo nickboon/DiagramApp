@@ -1,5 +1,4 @@
 (function(app) {
-    // create and return API for this module
     app.createUiObject = function() {
         function download(filename, url) {
             var element = document.createElement('a');
