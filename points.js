@@ -3,6 +3,10 @@
         return { x: 0, y: 0, z: 0 };
     }
 
+    function isNotAPoint(object) {
+        return isNaN(object.x) || isNaN(object.y) || isNaN(object.z);
+    }
+
     function copyOf(point) {
         return { x: point.x, y: point.y, z: point.z };
     }
@@ -146,7 +150,8 @@
             getCubePoints: getCubePoints,
             getPrismPoints: getPrismPoints,
             reflectPointsAcrossZero: reflectPointsAcrossZero,
-            createAxis: createAxis
+            createAxis: createAxis,
+            isNotAPoint: isNotAPoint
         };
     };
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

@@ -1,5 +1,6 @@
 (function(app) {
-    var getNearestZFromArray = app.createPointsObject().getNearestZFromArray;
+    var getNearestZFromArray = app.createPointsObject().getNearestZFromArray,
+        isNotAPoint = app.createPointsObject().isNotAPoint;
 
     function toSolid(primitive) {
         return {
@@ -10,7 +11,7 @@
 
     app.createPrimitivesObject = function(drawing, vectorDrawing) {
         function createLine(pointA, pointB, colour, alpha) {
-            if (isNaN(pointA.x) || isNaN(pointB.x)) {
+            if (isNotAPoint(pointA) || isNotAPoint(pointB)) {
                 throw "You need at least 2 defined vertices for a line.";
             }
 
@@ -32,7 +33,7 @@
         }
 
         function createCurve(points, colour, alpha) {
-            if (isNaN(points[0].x) || isNaN(points[1]) || isNaN(points[2].x) || isNaN(points[3])) {
+            if (isNotAPoint(points[0]) || isNotAPoint(points[1]) || isNotAPoint(points[2]) || isNotAPoint(points[3])) {
                 throw "You need at least 4 defined vertices for a curve.";
             }
 
