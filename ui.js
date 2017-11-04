@@ -3,6 +3,10 @@
         var searchParams = new URLSearchParams(location.search),
             ui = {};
 
+        ui.getTimestampedFilename = function(extension, prefix) {
+            return prefix + new Date() + extension;
+        }
+
         ui.download = function(filename, url) {
             var element = document.createElement('a');
             element.setAttribute('href', url);
@@ -45,7 +49,10 @@
         }
 
         ui.useSearchParamBoolOr = function(paramKey, defaultValue) {
-            return searchParams.get(paramKey) || defaultValue;
+            var userDefinedBool = searchParams.get(paramKey)
+
+            return userDefinedBool === undefined || !typeof boolean ?
+                defaultValue : userDefinedBool;
         }
 
         return ui;
