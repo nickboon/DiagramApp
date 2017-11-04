@@ -56,7 +56,7 @@
         };
 
         create.fill = function(points, colour) {
-            if (points.length < 3) {
+            if (!points || points.length < 3) {
                 throw "You need pass in an array of at least 3 points to create a fill.";
             }
 
