@@ -130,12 +130,6 @@
             context.restore();
         }
 
-        draw.image = function(context, htmlElement, width, height, point) {
-            context.save();
-            context.drawImage(htmlElement, point.x, point.y, width, height);
-            context.restore();
-        };
-
         return draw;
     };
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
