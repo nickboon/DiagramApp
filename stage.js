@@ -17,21 +17,19 @@
         }
 
         function drawBackground(context) {
-            if (background) {
-                context.save();
+            context.save();
 
-                if (background.colour) {
-                    context.fillStyle = background.colour;
-                    context.fillRect(0, 0, canvas.width, canvas.height);
-                }
-                if (background.image) {
-                    var image = background.image,
-                        htmlElement = image.getHtmlElement();
-
-                    context.drawImage(htmlElement, image.x, image.y, image.width, image.height);
-                }
-                context.restore();
+            if (background.colour) {
+                context.fillStyle = background.colour;
+                context.fillRect(0, 0, canvas.width, canvas.height);
             }
+            if (background.image) {
+                var image = background.image,
+                    htmlElement = image.getHtmlElement();
+
+                context.drawImage(htmlElement, image.x, image.y, image.width, image.height);
+            }
+            context.restore();
         }
 
         function draw() {

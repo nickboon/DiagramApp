@@ -103,38 +103,6 @@
             };
         };
 
-        create.image = function(url, point, width, height, htmlElement) {
-            function createHtmlElement() {
-                var imgElement = document.createElement('img');
-                imgElement.src = url;
-                return imgElement;
-            }
-
-            if (!url) {
-                throw "You need pass in a url points to create an image.";
-            }
-
-            point = point || { x: 0, y: 0, z: 0 };
-            htmlElement = htmlElement || createHtmlElement();
-
-            return {
-                points: [point],
-
-                getNearestZ: function() {
-                    return getNearestZFromArray([point]);
-                },
-
-                draw: function(context) {
-                    draw.image(context, htmlElement, width, height, point)
-                },
-
-                width: width || htmlElement ? htmlElement.width : 0,
-                height: height || htmlElement ? htmlElement.height : 0,
-                source: url,
-                htmlElement: htmlElement
-            };
-        };
-
         return create;
     };
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
