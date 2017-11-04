@@ -1,13 +1,13 @@
 (function(app) {
-    var defaultFocalLength = 500,
-        defaultVanishingDistance = 1000,
-        defaultMaxAlpha = 1;
+    app.createPerspective = function(settings) {
+        var defaultVanishingDistance = 1000,
+            defaultMaxAlpha = 1,
 
-    app.createPerspectiveObject = function(vanishingPointX, vanishingPointY, f) {
-        var focalLength = f || defaultFocalLength,
-            vanishingDistance = defaultVanishingDistance,
-            maxAlpha = defaultMaxAlpha;
-
+            focalLength = settings.focalLength || 500,
+            vanishingDistance = settings.vanishingDistance || defaultVanishingDistance,
+            maxAlpha = settings.maxAlpha || defaultMaxAlpha,
+            vanishingPointX = settings.vanishingPointX,
+            vanishingPointY = settings.vanishingPointY;
 
         function getScale(point) {
             return focalLength / (focalLength + point.z);
@@ -45,7 +45,7 @@
                 maxAlpha = m || defaultMaxAlpha;
         }
 
-        if (!vanishingPointX || !vanishingPointY) {
+        if (!settings || !vanishingPointX || !vanishingPointY) {
             throw 'You need to pass in coordinates for the vanishing point to create a perspective object';
         }
 

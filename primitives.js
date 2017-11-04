@@ -1,16 +1,11 @@
 (function(app) {
-    var getNearestZFromArray = app.createPointsObject().getNearestZFromArray,
-        isNotAPoint = app.createPointsObject().isNotAPoint;
+    app.createPrimitives = function() {
+        var getNearestZFromArray = app.createPointsObject().getNearestZFromArray,
+            isNotAPoint = app.createPointsObject().isNotAPoint,
+            draw = app.draw(),
+            create = {};
 
-    function toSolid(primitive) {
-        return {
-            points: primitive.points,
-            primitives: [primitive]
-        };
-    }
-
-    app.createPrimitivesObject = function(drawing, vectorDrawing) {
-        function createLine(pointA, pointB, colour, alpha) {
+        create.line = function(pointA, pointB, colour) {
             if (isNotAPoint(pointA) || isNotAPoint(pointB)) {
                 throw "You need at least 2 defined vertices for a line.";
             }
@@ -22,17 +17,13 @@
                     return Math.min(pointA.z, pointB.z);
                 },
 
-                draw: function(drawingContext, alpha) {
-                    drawing.drawLine(drawingContext, pointA, pointB, colour, alpha);
-                },
-
-                getSvg: function() {
-                    return vectorDrawing.line(pointA, pointB, colour, alpha);
+                draw: function(context, perspective, alpha) {
+                    draw.line(context, perspective, pointA, pointB, colour, alpha);
                 }
             };
-        }
+        };
 
-        function createCurve(points, colour, alpha) {
+        create.curve = function(points, colour) {
             if (isNotAPoint(points[0]) || isNotAPoint(points[1]) || isNotAPoint(points[2]) || isNotAPoint(points[3])) {
                 throw "You need at least 4 defined vertices for a curve.";
             }
@@ -44,17 +35,27 @@
                     return Math.min(points[0].z, points[3].z);
                 },
 
-                draw: function(drawingContext, alpha) {
-                    drawing.drawCurve(drawingContext, points, colour, alpha);
-                },
-
-                getSvg: function() {
-                    return vectorDrawing.curve(points, colour, alpha);
+                draw: function(context, perspective, alpha) {
+                    draw.curve(context, perspective, points, colour, alpha);
                 }
             };
-        }
+        };
 
-        function createFill(points, colour, alpha) {
+        create.circle = function(point, radius, colour) {
+            return {
+                points: [point],
+
+                getNearestZ: function() {
+                    return point.z;
+                },
+
+                draw: function(context, perspective, alpha) {
+                    draw.circle(context, perspective, point, radius, colour, alpha);
+                }
+            };
+        };
+
+        create.fill = function(points, colour) {
             if (points.length < 3) {
                 throw "You need pass in an array of at least 3 points to create a fill.";
             }
@@ -66,25 +67,74 @@
                     return getNearestZFromArray(points);
                 },
 
-                draw: function(drawingContext, alpha) {
-                    drawing.drawFill(drawingContext, points, colour, alpha);
-                },
-
-                getSvg: function() {
-                    return vectorDrawing.fill(points, colour, alpha);
+                draw: function(context, perspective, alpha) {
+                    draw.fill(context, perspective, points, colour, alpha);
                 }
             };
-        }
-
-        if (!drawing) {
-            throw 'You need to pass in a drawing object to create primitives.';
-        }
-
-        return {
-            toSolid: toSolid,
-            createLine: createLine,
-            createCurve: createCurve,
-            createFill: createFill
         };
+
+        create.circularFill = function(point, radius, colour) {
+            return {
+                points: [point],
+
+                getNearestZ: function() {
+                    return point.z;
+                },
+
+                draw: function(context, perspective, alpha) {
+                    draw.circularFill(context, perspective, point, radius, colour, alpha);
+                }
+            };
+        };
+
+        create.label = function(text, point, colour, alpha, font, isScaled) {
+            point = point || { x: 0, y: 0, z: 0 };
+
+            return {
+                points: [point],
+
+                getNearestZ: function() {
+                    return point.z;
+                },
+
+                draw: function(context, perspective, alpha) {
+                    draw.label(context, perspective, text, point, colour, alpha, font, isScaled);
+                }
+            };
+        };
+
+        create.image = function(url, point, width, height, htmlElement) {
+            function createHtmlElement() {
+                var imgElement = document.createElement('img');
+                imgElement.src = url;
+                return imgElement;
+            }
+
+            if (!url) {
+                throw "You need pass in a url points to create an image.";
+            }
+
+            point = point || { x: 0, y: 0, z: 0 };
+            htmlElement = htmlElement || createHtmlElement();
+
+            return {
+                points: [point],
+
+                getNearestZ: function() {
+                    return getNearestZFromArray([point]);
+                },
+
+                draw: function(context) {
+                    draw.image(context, htmlElement, width, height, point)
+                },
+
+                width: width || htmlElement ? htmlElement.width : 0,
+                height: height || htmlElement ? htmlElement.height : 0,
+                source: url,
+                htmlElement: htmlElement
+            };
+        };
+
+        return create;
     };
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

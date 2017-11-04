@@ -1,76 +1,63 @@
 (function(app) {
-    app.createFakeSpheresObject = function(perspective) {
-        var drawing = app.createDrawingObject(perspective),
-            vectorDrawing = app.createVectorDrawingObject(perspective),
-            shapes = app.createShapesObject(drawing, vectorDrawing);
+    app.createFakeSpheresObject = function() {
+        var draw = app.draw();
 
-        function createFakeSphereFill(point, radius, apparentRadius, colour, alpha) {
-            var fill = shapes.createCircularFill(point, apparentRadius, colour, alpha);
+        function createFakeSphereFill(point, radius, colour) {
+            var nearestPoint = { x: point.x, y: point.y, z: point.z - radius };
 
             return {
                 getNearestZ: function getNearestZ() {
                     return point.z - radius;
                 },
-                draw: fill.draw,
-                getSvg: fill.getSvg
+
+                draw: function(context, perspective, alpha) {
+                    var apparentRadius = radius * perspective.getScale(nearestPoint);
+
+                    draw.circularFill(context, perspective, point, apparentRadius, colour, alpha);
+                }
+
+                //getSvg: fill.getSvg
             };
         }
 
-        function createFakeSphereEdge(point, apparentRadius, colour, alpha) {
-            var circle = shapes.createCircle(point, apparentRadius, colour, alpha);
+        function createFakeSphereEdge(point, radius, colour) {
+            var nearestPoint = { x: point.x, y: point.y, z: point.z - radius };
 
             return {
+
                 getNearestZ: function getNearestZ() {
                     return point.z
                 },
-                draw: circle.draw,
-                getSvg: circle.getSvg
+
+                draw: function(context, perspective, alpha) {
+                    var apparentRadius = radius * perspective.getScale(nearestPoint);
+
+                    draw.circle(context, perspective, point, apparentRadius, colour, alpha);
+                }
+
+                //getSvg: circle.getSvg
             };
         }
 
         function create(point, radius, lineColour, fillColour, alpha) {
-            var nearPoint,
-                apparentRadius;
-
             point = point || { x: 0, y: 0, z: 0 };
-            nearPoint = { x: point.x, y: point.y, z: point.z - radius };
-            apparentRadius = radius * perspective.getScale(nearPoint);
-
-            function createPrimitives() {
-                return [
-                    createFakeSphereEdge(point, apparentRadius, lineColour, alpha),
-                    createFakeSphereFill(point, radius, apparentRadius, fillColour, alpha)
-                ]
-            }
 
             return {
                 points: [point],
-                primitives: createPrimitives()
+                primitives: [
+                    createFakeSphereEdge(point, radius, lineColour, alpha),
+                    createFakeSphereFill(point, radius, fillColour, alpha)
+                ]
             };
         }
 
         function createStroke(point, radius, lineColour, alpha) {
-            var nearPoint,
-                apparentRadius;
-
             point = point || app.createPointsObject().create;
-            nearPoint = { x: point.x, y: point.y, z: point.z - radius };
-            apparentRadius = radius * perspective.getScale(nearPoint);
-
-            function createPrimitives() {
-                return [
-                    createFakeSphereEdge(point, apparentRadius, lineColour, alpha)
-                ]
-            }
 
             return {
                 points: [point],
-                primitives: createPrimitives()
+                primitives: createFakeSphereEdge(point, lineColour, alpha)
             };
-        }
-
-        if (!perspective) {
-            throw 'You need to pass in a perspective object to create fake spheres.';
         }
 
         return {

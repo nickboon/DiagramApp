@@ -1,62 +1,49 @@
 (function(app) {
-    app.createStageObject = function(canvas, perspective, background) {
-        var drawingContext,
+    app.createStage = function(set) {
+        var settings = set || {},
+            width = settings.width || window.innerWidth,
+            height = settings.height || window.innerHeight,
+            perspective = app.createPerspective({
+                vanishingPointX: width / 2,
+                vanishingPointY: height / 2
+            }),
+            useAtmosphericPerspective = settings.useAtmosphericPerspective,
+            background = settings.background,
+            canvas = document.getElementById(settings.canvasId || 'canvas'),
+            context = canvas.getContext('2d'),
             primitives = [],
-            transformers = [];
+            transformers = [],
+            stage = {};
 
-        function addSolid(solid) {
-            primitives = primitives.concat(solid.primitives);
-        }
-
-        function setSolids(solidArray) {
-            primitives.length = 0;
-            for (var i = solidArray.length - 1; i >= 0; i -= 1) {
-                addSolid(solidArray[i]);
-            }
-        }
-
-        function setTransformers(transformersArray) {
-            transformers.length = 0;
-            transformers = transformersArray;
-        }
-
-        function drawBackground() {
-            if (background) {
-                drawingContext.save();
-
-                drawingContext.fillStyle = background.colour;
-                drawingContext.fillRect(0, 0, canvas.width, canvas.height);
-
-                if (background.image) {
-                    var image = background.image,
-                        htmlElement = image.getHtmlElement();
-
-                    drawingContext.drawImage(htmlElement, image.x, image.y, image.width, image.height);
-                }
-
-                drawingContext.restore();
-            }
-        }
-
-        function draw(useAtmosphericPerspective) {
-            drawingContext.clearRect(0, 0, canvas.width, canvas.height);
-
-            drawBackground();
+        function draw() {
+            context.clearRect(0, 0, width, height);
 
             primitives.sort(function(a, b) {
                 return a.getNearestZ() - b.getNearestZ();
             });
-            primitives.reverse();
 
+            if (background) { // special case?
+                var create = app.createPrimitives();
+
+                if (background.image) {
+                    var backgroundImage = background.image();
+                    primitives.pushcreate.image(backgroundImage.url, backgroundImage.point, backgroundImage.width, backgroundImage.height, backgroundImage.htmlElement);
+                }
+                if (background.colour) {
+                    primitives.push(create.fill());
+                }
+            }
+
+            primitives.reverse();
             primitives.forEach(function(primitive) {
                 var primitiveZ = primitive.getNearestZ();
                 if (perspective.isPointBehindViewer(primitiveZ)) {
-                    primitive.draw(drawingContext, useAtmosphericPerspective ? perspective.getAtmosphericAlpha(primitiveZ) : undefined);
+                    primitive.draw(context, perspective, useAtmosphericPerspective ? perspective.getAtmosphericAlpha(primitiveZ) : undefined);
                 }
             });
         }
 
-        function transform() {
+        function update() {
             transformers.forEach(function(transformer) {
                 transformer.transform();
             });
@@ -64,28 +51,38 @@
 
         function animate() {
             window.requestAnimationFrame(animate, canvas);
-            transform();
+            update();
             draw();
         }
 
-        function animateWithAtmosphericPerspective() {
-            window.requestAnimationFrame(animateWithAtmosphericPerspective, canvas);
-            transform();
-            draw(true);
+        function init() {
+            canvas.width = width;
+            canvas.height = height;
+            animate();
         }
 
-        if (!canvas || !perspective) {
-            throw 'To create a stage you must pass it a canvas and a perspective object.';
-        }
+        stage.setPrimitives = function(solids) {
+            var i = solids.length - 1;
 
-        drawingContext = canvas.getDrawingContext();
-        canvas = canvas.getHtmlElement();
-
-        return {
-            setSolids: setSolids,
-            setTransformers: setTransformers,
-            animate: animate,
-            animateWithAtmosphericPerspective: animateWithAtmosphericPerspective
+            primitives.length = 0;
+            for (; i >= 0; i -= 1) {
+                primitives = primitives.concat(solids[i].primitives);
+            }
         };
+
+        stage.getPrimitives = function() {
+            return primitives;
+        }
+
+        stage.setTransformers = function(updatedTransformers) {
+            transformers.length = 0;
+            transformers = updatedTransformers;
+        };
+
+        stage.background = background;
+
+        init();
+
+        return stage;
     };
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));
