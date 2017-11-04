@@ -109,7 +109,7 @@
             context.restore();
         }
 
-        draw.label = function(context, perspective, text, point, colour, alpha, font, isScaled) {
+        draw.label = function(context, perspective, text, point, colour, alpha, font) {
             var getScreenX = perspective.getScreenX,
                 getScreenY = perspective.getScreenY,
                 scale = perspective.getScale,
@@ -117,11 +117,8 @@
                 size;
 
             font = font || defaultFont;
-            size = font.size;
+            size = font.size * scale(point);
             family = font.family;
-            if (isScaled) {
-                size *= scale(point);
-            }
             colour = colour || defaultLineColour;
             context.save();
             context.fillStyle = colours.toRgb(colour, alpha);
