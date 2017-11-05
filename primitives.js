@@ -87,7 +87,7 @@
             };
         };
 
-        create.label = function(text, point, colour, alpha, font) {
+        create.label = function(text, point, colour, alpha, font, isScaled) {
             point = point || { x: 0, y: 0, z: 0 };
 
             return {
@@ -98,7 +98,7 @@
                 },
 
                 draw: function(context, perspective, alpha) {
-                    draw.label(context, perspective, text, point, colour, alpha, font);
+                    draw.label(context, perspective, text, point, colour, alpha, font, isScaled);
                 }
             };
         };
