@@ -1,12 +1,12 @@
 (function(app) {
-    app.newImage = function(url, width, height, x, y, htmlElement) {
+    app.createRaster = function(url, width, height, x, y, htmlElementId) {
         var image = {
             source: url,
             width: width || 0,
             height: height || 0,
             x: x || 0,
             y: y || 0,
-            htmlElement: htmlElement
+            htmlElement: document.getElementById(htmlElementId)
         };
 
         image.getHtmlElement = function() {
