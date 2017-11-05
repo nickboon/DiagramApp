@@ -20,14 +20,37 @@
             document.body.removeChild(element);
         }
 
-        ui.setKeyListener = function(keyCode, action) {
+        ui.setKeyDownListener = function(keyCode, action, shiftAction) {
             window.addEventListener('keydown', function(event) {
-                if (event.keyCode === keyCode) {
+                if (shiftAction && event.keyCode === keyCode && event.shiftKey) {
+                    event.preventDefault();
+                    shiftAction();
+                } else if (event.keyCode === keyCode) {
                     event.preventDefault();
                     action();
                 }
             });
         }
+
+        // ui.setShiftAndKeyDownListener = function(keyCode, action) {
+        //     window.addEventListener('keydown', function(event) {
+        //         // event.preventDefault();
+        //         // if (event.keyCode === keyCode && event.shiftKey) {
+        //         //     action();
+        //         // }
+        //         if (event.shiftKey && event.keyCode === keyCode) {
+        //             event.preventDefault();
+        //             action();
+        //         }
+        //     });
+        // }
+
+        ui.setAllKeysUpListener = function(action) {
+            window.addEventListener('keyup', function() {
+                action();
+            });
+        }
+
 
         ui.toggleVisibilty = function(htmlElement) {
             var isHidden = htmlElement.style.display == 'none';
@@ -53,6 +76,15 @@
 
             return userDefinedBool === undefined || !typeof boolean ?
                 defaultValue : userDefinedBool;
+        }
+
+        ui.setDefaultTransformationKeyListeners = function(transformer) {
+            ui.setKeyDownListener(37, transformer.rotateYCCW, transformer.shiftMinusX); // LEFT
+            ui.setKeyDownListener(38, transformer.rotateXCW, transformer.shiftMinusZ); // UP
+            ui.setKeyDownListener(39, transformer.rotateYCW, transformer.shiftX); // RIGHT
+            ui.setKeyDownListener(40, transformer.rotateXCCW, transformer.shiftZ); // DOWN
+
+            ui.setAllKeysUpListener(transformer.cease);
         }
 
         return ui;
