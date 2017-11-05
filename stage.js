@@ -1,7 +1,6 @@
 (function(app) {
     app.createStage = function(settings) {
-        var
-            canvas,
+        var canvas = {},
             width = 0,
             height = 0,
             background,
@@ -85,6 +84,9 @@
             transformers = updatedTransformers;
         };
 
+        stage.getCanvas = function() {
+            return canvas;
+        };
 
         settings = settings || {};
         canvas = document.getElementById(settings.canvasId || 'canvas');
