@@ -116,13 +116,14 @@
                 family,
                 size;
 
+            colour = colour || defaultLineColour;
             font = font || defaultFont;
+            family = font.family;
             size = font.size;
             if (isScaled) {
                 size *= scale(point);
             }
-            family = font.family;
-            colour = colour || defaultLineColour;
+
             context.save();
             context.fillStyle = colours.toRgb(colour, alpha);
             context.font = size + 'px ' + family;

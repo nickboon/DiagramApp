@@ -31,16 +31,9 @@
             context.restore();
         }
 
-        function draw() {
+        function sortPrimitivesAndForEach(doAction) {
             var perspective = app.createPerspective(settings.perspective),
-                context = canvas.getContext('2d'),
                 useAtmosphericPerspective = settings.useAtmosphericPerspective;
-
-            context.clearRect(0, 0, width, height);
-
-            if (background) {
-                drawBackground(context);
-            }
 
             primitives.sort(function(a, b) {
                     return a.getNearestZ() - b.getNearestZ();
@@ -49,9 +42,25 @@
                 .forEach(function(primitive) {
                     var primitiveZ = primitive.getNearestZ();
                     if (perspective.isPointBehindViewer(primitiveZ)) {
-                        primitive.draw(context, perspective, useAtmosphericPerspective ? perspective.getAtmosphericAlpha(primitiveZ) : undefined);
+                        var alpha = useAtmosphericPerspective ? perspective.getAtmosphericAlpha(primitiveZ) : undefined
+
+                        doAction(primitive, perspective, alpha);
                     }
                 });
+        }
+
+        function draw() {
+            var context = canvas.getContext('2d');
+
+            context.clearRect(0, 0, width, height);
+
+            if (background) {
+                drawBackground(context);
+            }
+
+            sortPrimitivesAndForEach(function(primitive, perspective, alpha) {
+                primitive.draw(context, perspective, alpha);
+            });
         }
 
         function animate() {
@@ -94,6 +103,7 @@
         height = settings.height || window.innerHeight;
         background = settings.background;
         stage.background = background;
+        stage.sortPrimitivesAndForEach = sortPrimitivesAndForEach;
 
         init();
 

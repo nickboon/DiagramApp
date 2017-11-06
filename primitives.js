@@ -3,6 +3,7 @@
         var getNearestZFromArray = app.createPointsObject().getNearestZFromArray,
             isNotAPoint = app.createPointsObject().isNotAPoint,
             draw = app.draw(),
+            print = app.print(),
             create = {};
 
         create.line = function(pointA, pointB, colour) {
@@ -19,6 +20,10 @@
 
                 draw: function(context, perspective, alpha) {
                     draw.line(context, perspective, pointA, pointB, colour, alpha);
+                },
+
+                print: function(perspective, alpha) {
+                    return print.line(perspective, pointA, pointB, colour, alpha);
                 }
             };
         };
@@ -37,6 +42,10 @@
 
                 draw: function(context, perspective, alpha) {
                     draw.curve(context, perspective, points, colour, alpha);
+                },
+
+                print: function(perspective, alpha) {
+                    return print.curve(perspective, points, colour, alpha);
                 }
             };
         };
@@ -51,6 +60,10 @@
 
                 draw: function(context, perspective, alpha) {
                     draw.circle(context, perspective, point, radius, colour, alpha);
+                },
+
+                print: function(perspective, alpha) {
+                    return print.circle(perspective, point, radius, colour, alpha);
                 }
             };
         };
@@ -69,6 +82,10 @@
 
                 draw: function(context, perspective, alpha) {
                     draw.fill(context, perspective, points, colour, alpha);
+                },
+
+                print: function(perspective, alpha) {
+                    return print.fill(perspective, points, colour, alpha);
                 }
             };
         };
@@ -83,6 +100,10 @@
 
                 draw: function(context, perspective, alpha) {
                     draw.circularFill(context, perspective, point, radius, colour, alpha);
+                },
+
+                print: function(perspective, alpha) {
+                    return print.circularFill(perspective, point, radius, colour, alpha);
                 }
             };
         };
@@ -99,6 +120,10 @@
 
                 draw: function(context, perspective, alpha) {
                     draw.label(context, perspective, text, point, colour, alpha, font, isScaled);
+                },
+
+                print: function(perspective, alpha) {
+                    return print.label(perspective, text, point, colour, alpha, font, isScaled);
                 }
             };
         };

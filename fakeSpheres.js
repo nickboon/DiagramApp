@@ -1,6 +1,7 @@
 (function(app) {
     app.createFakeSpheresObject = function() {
         var draw = app.draw();
+        var print = app.print();
 
         function createFakeSphereFill(point, radius, colour) {
             var nearestPoint = { x: point.x, y: point.y, z: point.z - radius };
@@ -14,9 +15,13 @@
                     var apparentRadius = radius * perspective.getScale(nearestPoint);
 
                     draw.circularFill(context, perspective, point, apparentRadius, colour, alpha);
-                }
+                },
 
-                //getSvg: fill.getSvg
+                print: function(perspective, alpha) {
+                    var apparentRadius = radius * perspective.getScale(nearestPoint);
+
+                    return print.circularFill(perspective, point, apparentRadius, colour, alpha);
+                }
             };
         }
 
@@ -33,9 +38,13 @@
                     var apparentRadius = radius * perspective.getScale(nearestPoint);
 
                     draw.circle(context, perspective, point, apparentRadius, colour, alpha);
-                }
+                },
 
-                //getSvg: circle.getSvg
+                print: function(perspective, alpha) {
+                    var apparentRadius = radius * perspective.getScale(nearestPoint);
+
+                    return print.circle(perspective, point, apparentRadius, colour, alpha);
+                }
             };
         }
 
