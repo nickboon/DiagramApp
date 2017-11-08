@@ -106,7 +106,7 @@
         return transformer;
     }
 
-    app.createAutoRotationTransformer = function(solids, axis, numberOfIncrements) {
+    app.createAutoRotationTransformer = function(solids, axis, isClockwise, numberOfIncrements) {
         var incrementAngle = 0,
             points = [],
             transformer = {};
@@ -133,6 +133,9 @@
         axis = axis || 'y';
         numberOfIncrements = numberOfIncrements || 360;
         incrementAngle = Math.PI * 2 / numberOfIncrements;
+        if (isClockwise) {
+            incrementAngle = -incrementAngle;
+        }
 
         setPoints(solids);
 
