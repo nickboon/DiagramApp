@@ -166,21 +166,6 @@
                 }
             }
 
-            // function sortPrimitives() {
-            //     primitives.sort(function(a, b) {
-            //         return a.getNearestZ() - b.getNearestZ();
-            //     });
-            //     primitives.reverse();
-            // }
-
-            // function addStagePrimitives() {
-            //     sortPrimitives();
-
-            //     primitives.forEach(function(primitive) {
-            //         svgString += primitive.print();
-            //     });
-            // }
-
             if (!stage) {
                 throw 'You need to pass a stage to print.stage method.';
             }
@@ -189,9 +174,8 @@
             if (background) {
                 addBackground();
             }
-            //addStagePrimitives();
-            stage.sortPrimitivesAndForEach(function(primitive, perspective, alpha) {
-                console.log(primitive);
+
+            stage.forEachPrimitive(function(primitive, perspective, alpha) {
                 svgString += primitive.print(perspective, alpha);
             });
 

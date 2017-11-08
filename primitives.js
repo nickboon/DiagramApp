@@ -3,7 +3,7 @@
         var getNearestZFromArray = app.createPointsObject().getNearestZFromArray,
             isNotAPoint = app.createPointsObject().isNotAPoint,
             draw = app.draw(),
-            print = app.print(),
+            print = typeof app.print === 'function' ? app.print() : undefined,
             create = {};
 
         create.line = function(pointA, pointB, colour) {
