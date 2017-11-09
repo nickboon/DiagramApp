@@ -14,14 +14,16 @@
         test.assertInputExpectedOutput([5], 0);
     }
 
-    function createLabelsForCubeVertices(points, primitives, shapes) {
-        var labelSolids = [],
-            i,
-            copyOf = app.createPointsObject().copyOf;
+    function createLabelsForCubeVertices(points) {
+        var copyOf = app.createPointsObject().copyOf,
+            primitives = app.primitives,
+            labelSolids = [],
+            primitive,
+            i;
 
         for (i = points.length - 1; i >= 0; i -= 1) {
-            var primitive = (
-                shapes.createLabel('vertex no.' + i,
+            primitive = (
+                primitives.createLabel('vertex no.' + i,
                     copyOf(points[i]),
                     '#bb2222',
                     .8,
@@ -35,25 +37,19 @@
         return labelSolids;
     }
 
-    function createSolids(perspective) {
-        var drawing = app.createDrawingObject(perspective),
-            primitives = app.createPrimitivesObject(drawing),
-            shapes = app.createShapesObject(drawing),
-            solids = app.createSolidsObject(primitives),
-            cube = solids.createHexahedron();
+    function createSolids() {
+        var cube = app.createHexahedron().createSolid();
 
         return [cube].concat(
-            createLabelsForCubeVertices(cube.points, primitives, shapes)
+            createLabelsForCubeVertices(cube.points)
         );
     }
 
     app.run = function() {
-        var diagram = app.createDefaultFullScreenDiagram(),
-            stage = diagram.stage,
-            perspective = diagram.perspective,
-            solids = createSolids(perspective),
+        var stage = app.createStage(),
+            solids = createSolids(),
             transformation = app.createTransformationObject(),
-            transformer = transformation.createKeyboardDrivenTransformer(solids);
+            transformer = app.createInputTransformer(solids);
 
         trimAngleUnitTests();
 
@@ -63,5 +59,6 @@
 
         stage.setSolids(solids);
         stage.setTransformers([transformer]);
+        app.createUiObject().setDefaultTransformationKeyListeners(transformer);
     }
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

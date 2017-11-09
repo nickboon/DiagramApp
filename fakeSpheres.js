@@ -1,7 +1,7 @@
 (function(app) {
     app.createFakeSpheresObject = function() {
-        var draw = app.draw();
-        var print = app.print();
+        var draw = app.draw(),
+            print = typeof app.print === 'function' ? app.print() : undefined;
 
         function createFakeSphereFill(point, radius, colour) {
             var nearestPoint = { x: point.x, y: point.y, z: point.z - radius };

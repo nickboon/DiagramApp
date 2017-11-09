@@ -3,7 +3,7 @@
         var stage = app.createStage(),
             cube = app.createHexahedron().createSolid();
 
-        stage.setPrimitives([cube]);
+        stage.setSolids([cube]);
         stage.setTransformers([app.createAutoRotationTransformer([cube], 'y')]);
     }
 })(window.DIAGRAM_APP || (window.DIAGRAM_APP = {}));

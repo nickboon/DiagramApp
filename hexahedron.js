@@ -28,9 +28,9 @@
         }
 
         function createPrimitives(points, lineColour, fillColour, alpha) {
-            var create = app.createPrimitives(),
-                createLine = create.line,
-                createFill = create.fill;
+            var primitives = app.primitives,
+                createLine = primitives.createLine,
+                createFill = primitives.createFill;
 
             return [
                 createLine(points[0], points[1], lineColour, alpha),

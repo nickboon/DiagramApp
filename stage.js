@@ -60,7 +60,7 @@
             animate();
         }
 
-        stage.setPrimitives = function(solids) {
+        stage.setSolids = function(solids) {
             var i = solids.length - 1;
 
             primitives.length = 0;
