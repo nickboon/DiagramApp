@@ -1,8 +1,14 @@
 (function(app) {
-    var transform = {};
+    var rotationalIncrement = Math.PI / 180,
+        transform = {};
 
-    transform.rotatePointAboutX = function(point, angle) {
-        var cosX = Math.cos(angle),
+    transform.setRotationalIncrement = function(numberOfIncrements) {
+        rotationalIncrement = Math.PI * 2 / numberOfIncrements;
+    }
+
+    transform.rotatePointAboutX = function(point, numberOfIncrements) {
+        var angle = rotationalIncrement * numberOfIncrements,
+            cosX = Math.cos(angle),
             sinX = Math.sin(angle),
             newY = point.y * cosX - point.z * sinX,
             newZ = point.z * cosX + point.y * sinX;
@@ -11,8 +17,9 @@
         return point;
     }
 
-    transform.rotatePointAboutY = function(point, angle) {
-        var cosY = Math.cos(angle),
+    transform.rotatePointAboutY = function(point, numberOfIncrements) {
+        var angle = rotationalIncrement * numberOfIncrements,
+            cosY = Math.cos(angle),
             sinY = Math.sin(angle),
             newX = point.x * cosY - point.z * sinY,
             newZ = point.z * cosY + point.x * sinY;
@@ -21,8 +28,9 @@
         return point;
     }
 
-    transform.rotatePointAboutZ = function(point, angle) {
-        var cosZ = Math.cos(angle),
+    transform.rotatePointAboutZ = function(point, numberOfIncrements) {
+        var angle = rotationalIncrement * numberOfIncrements,
+            cosZ = Math.cos(angle),
             sinZ = Math.sin(angle),
             newX = point.x * cosZ - point.y * sinZ,
             newY = point.y * cosZ + point.x * sinZ;

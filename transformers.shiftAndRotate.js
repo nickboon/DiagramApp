@@ -3,7 +3,6 @@
         var transformations = app.transformations,
             rotatePointAboutX = transformations.rotatePointAboutX,
             rotatePointAboutY = transformations.rotatePointAboutY,
-            angle = 0,
             angleX = 0,
             angleY = 0,
             shift = 0,
@@ -44,19 +43,19 @@
         }
 
         transformer.rotateXCW = function() {
-            angleX += angle;
+            angleX += numberOfIncrements;
         }
 
         transformer.rotateXCCW = function() {
-            angleX -= angle;
+            angleX -= numberOfIncrements;
         }
 
         transformer.rotateYCW = function() {
-            angleY += angle;
+            angleY += numberOfIncrements;
         }
 
         transformer.rotateYCCW = function() {
-            angleY -= angle;
+            angleY -= numberOfIncrements;
         }
 
         transformer.cease = function() {
@@ -65,8 +64,7 @@
         }
 
         solids = solids || [];
-        numberOfIncrements = numberOfIncrements || 360;
-        angle = Math.PI * 2 / numberOfIncrements;
+        numberOfIncrements = numberOfIncrements || 1;
         shift = shiftMagnitude || .5;
 
         setPoints();

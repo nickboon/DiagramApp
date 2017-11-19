@@ -4,7 +4,6 @@
             rotatePointAboutX = transformations.rotatePointAboutX,
             rotatePointAboutY = transformations.rotatePointAboutY,
             rotatePointAboutZ = transformations.rotatePointAboutZ,
-            incrementAngle = 0,
             points = [],
             transformer = {};
 
@@ -17,21 +16,20 @@
         transformer.transform = function() {
             points.forEach(function(point) {
                 if (axis === 'y') {
-                    rotatePointAboutY(point, incrementAngle);
+                    rotatePointAboutY(point, numberOfIncrements);
                 } else if (axis === 'x') {
-                    rotatePointAboutX(point, incrementAngle);
+                    rotatePointAboutX(point, numberOfIncrements);
                 } else {
-                    rotatePointAboutZ(point, incrementAngle)
+                    rotatePointAboutZ(point, numberOfIncrements)
                 }
             });
         }
 
         solids = solids || [];
         axis = axis || 'y';
-        numberOfIncrements = numberOfIncrements || 360;
-        incrementAngle = Math.PI * 2 / numberOfIncrements;
+        numberOfIncrements = numberOfIncrements || 1;
         if (isClockwise) {
-            incrementAngle = -incrementAngle;
+            numberOfIncrements = -numberOfIncrements;
         }
 
         setPoints();
