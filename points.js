@@ -1,6 +1,14 @@
-(function(app) {
-    function newPoint() {
-        return { x: 0, y: 0, z: 0 };
+(function (app) {
+    function newPoint(x, y, z) {
+        x = x || 0;
+        y = y || 0;
+        z = z || 0;
+
+        return {
+            x: x,
+            y: y,
+            z: z
+        };
     }
 
     function isNotAPoint(object) {
@@ -8,7 +16,11 @@
     }
 
     function copyOf(point) {
-        return { x: point.x, y: point.y, z: point.z };
+        return {
+            x: point.x,
+            y: point.y,
+            z: point.z
+        };
     }
 
     function shiftTo(point, target) {
@@ -18,7 +30,7 @@
     }
 
     function shiftBy(points, vector) {
-        points.forEach(function(point) {
+        points.forEach(function (point) {
             point.x += vector.x;
             point.y += vector.y;
             point.z += vector.z;
@@ -26,7 +38,7 @@
     }
 
     function getNearestZFromArray(points) {
-        var numbers = points.map(function(point) {
+        var numbers = points.map(function (point) {
             return point.z;
         });
 
@@ -41,15 +53,46 @@
         if (!width || !height || !length) {
             throw 'You must pass in a width, height and length to get hexahedrons points.'
         }
-        return [
-            { x: -halfWidth, y: -halfHeight, z: -halfLength }, // 0 left top front
-            { x: halfWidth, y: -halfHeight, z: -halfLength }, // 1 right top front
-            { x: halfWidth, y: halfHeight, z: -halfLength }, // 2 right bottom front 
-            { x: -halfWidth, y: halfHeight, z: -halfLength }, // 3 left bottom front
-            { x: -halfWidth, y: -halfHeight, z: halfLength }, // 4 left top back
-            { x: halfWidth, y: -halfHeight, z: halfLength }, // 5 right top back
-            { x: halfWidth, y: halfHeight, z: halfLength }, // 6 right bottom back
-            { x: -halfWidth, y: halfHeight, z: halfLength } // 7 left bottom back				
+        return [{
+                x: -halfWidth,
+                y: -halfHeight,
+                z: -halfLength
+            }, // 0 left top front
+            {
+                x: halfWidth,
+                y: -halfHeight,
+                z: -halfLength
+            }, // 1 right top front
+            {
+                x: halfWidth,
+                y: halfHeight,
+                z: -halfLength
+            }, // 2 right bottom front 
+            {
+                x: -halfWidth,
+                y: halfHeight,
+                z: -halfLength
+            }, // 3 left bottom front
+            {
+                x: -halfWidth,
+                y: -halfHeight,
+                z: halfLength
+            }, // 4 left top back
+            {
+                x: halfWidth,
+                y: -halfHeight,
+                z: halfLength
+            }, // 5 right top back
+            {
+                x: halfWidth,
+                y: halfHeight,
+                z: halfLength
+            }, // 6 right bottom back
+            {
+                x: -halfWidth,
+                y: halfHeight,
+                z: halfLength
+            } // 7 left bottom back				
         ];
     }
 
@@ -75,8 +118,16 @@
             x = Math.sin(currentAngle) * radius;
             z = Math.cos(currentAngle) * radius;
 
-            topPoints.push({ x: x, y: -halfHeight, z: z });
-            basePoints.push({ x: x, y: halfHeight, z: z });
+            topPoints.push({
+                x: x,
+                y: -halfHeight,
+                z: z
+            });
+            basePoints.push({
+                x: x,
+                y: halfHeight,
+                z: z
+            });
         }
 
         return {
@@ -89,12 +140,16 @@
         var pointX = (axis === 'x') ? -point.x : point.x,
             pointY = (axis === 'y') ? -point.y : point.y,
             pointZ = (axis === 'z') ? -point.z : point.z;
-        return { x: pointX, y: pointY, z: pointZ };
+        return {
+            x: pointX,
+            y: pointY,
+            z: pointZ
+        };
     }
 
     function reflectPointsAcrossZero(points, axis) {
         var reflection = [];
-        points.forEach(function(point) {
+        points.forEach(function (point) {
             reflection.push(reflectPointAcrossZero(point, axis));
         });
         return reflection;
@@ -108,23 +163,23 @@
                 y: Math.atan(distance.y / distance.z) || 0,
                 z: Math.atan(distance.x / distance.y) || 0
             },
-            align = function(points, initialInclination) {
+            align = function (points, initialInclination) {
                 var transform = app.createTransformationObject(),
                     rotateX = transform.rotatePointAboutX,
                     rotateY = transform.rotatePointAboutY,
                     rotateZ = transform.rotatePointAboutZ,
                     difference = vector3d.subtract(initialInclination, inclination);
 
-                points.forEach(function(point) {
+                points.forEach(function (point) {
                     rotateX(point, difference.x);
                     rotateY(point, difference.y);
                     rotateZ(point, difference.z);
                 });
             },
-            distribute = function(points) {
+            distribute = function (points) {
                 var distancePerPoint = vector3d.divide(distance, points.length - 1);
 
-                points.forEach(function(point) {
+                points.forEach(function (point) {
                     point.x += distance.x;
                     point.y += distance.y;
                     point.z += distance.z;
@@ -139,7 +194,7 @@
     }
 
     // create and return API for this module	
-    app.createPointsObject = function() {
+    app.createPointsObject = function () {
         return {
             newPoint: newPoint,
             copyOf: copyOf,
